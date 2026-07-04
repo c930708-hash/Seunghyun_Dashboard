@@ -331,15 +331,90 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 .hidden-col{opacity:0;position:absolute;width:0;height:0;}
 
+.debt-auto-panel{margin:-2px 0 10px 20px;background:#FFF7F7;border:1.5px solid #FECACA;border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;}
+.debt-auto-title{font-size:12px;font-weight:800;color:#991B1B;}
+.debt-auto-sub{font-size:11px;color:#B91C1C;margin-top:2px;line-height:1.35;}
+.debt-auto-field{display:flex;align-items:center;gap:5px;font-size:11px;color:#7F1D1D;white-space:nowrap;}
+.debt-auto-edit{min-width:74px;text-align:right;font-family:'Space Grotesk',sans-serif;font-weight:800;outline:none;border-bottom:1.5px dashed transparent;color:#DC2626;cursor:text;}
+.debt-auto-edit:focus{border-color:#DC2626;}
+.debt-auto-day{width:34px;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:800;outline:none;border-bottom:1.5px dashed transparent;color:#DC2626;cursor:text;}
+.debt-auto-day:focus{border-color:#DC2626;}
+.meal-target-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.meal-target-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1rem;}
+.meal-target-label{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:5px;}
+.meal-target-val{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--text);}
+.meal-target-sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35;}
+.meal-protein{font-size:11px;color:var(--muted);margin-top:2px;font-weight:700;}
 
-  /* 모바일 저축 요약 */
+/* ── MOBILE ── */
+@media(max-width:640px){
+  body{padding:0 0 4rem;}
+  .main{padding:1rem 0.75rem;}
+  .topbar-inner{padding:0 0.75rem;gap:6px;}
+  .app-title{font-size:15px;}
+  .cat-tab{padding:5px 10px;font-size:12px;}
+  #sb-status{font-size:10px;}
+  .dday-inner{padding:0 0.75rem 4px;gap:6px;}
+  .dday-chip{padding:5px 10px;gap:5px;}
+  .dday-chip-name{max-width:72px;font-size:11px;}
+  .dday-chip-count{font-size:12px;}
+  .sub-tabs{gap:4px;flex-wrap:wrap;}
+  .sub-tab{padding:5px 10px;font-size:12px;}
+  .block{grid-template-columns:76px 1fr auto;gap:8px;padding:10px 10px 10px 24px;}
+  .drag-handle{left:5px;font-size:12px;}
+  .time-part{width:32px;font-size:12px;}
+  .duration{font-size:10px;}
+  .block-title{font-size:14px;}
+  .block-desc{font-size:12px;}
+  .hours-badge{font-size:11px;padding:3px 7px;}
+  .tag{font-size:10px;padding:2px 7px;}
+  .cal-title{font-size:16px;}
+  .cal-cell{min-height:52px;padding:4px;}
+  .cal-date{font-size:11px;}
+  .cal-pill{display:none;}
+  .cal-tot{font-size:9px;}
+  .goals-layout{grid-template-columns:1fr;}
+  .goals-date-grid{grid-template-columns:repeat(7,1fr);gap:3px;}
+  .gd-btn{min-height:60px;padding:6px 2px;border-radius:10px;}
+  .gd-main{font-size:12px;}
+  .gd-dow{font-size:9px;}
+  .gd-badge{font-size:8.5px;padding:1px 4px;}
+  .gd-today-tag{font-size:8px;}
+  .goals-panel{padding:1rem 0.85rem;}
+  .goal-add-row{flex-wrap:wrap;gap:6px;}
+  .goal-add-inp{width:100%;}
+  .budget-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .bcard{padding:0.85rem 0.9rem;}
+  .bcard-val{font-size:17px;}
+  .bcard.networth .bcard-val{font-size:20px;}
+  .bcard-label{font-size:11px;}
   .annual-card{padding:0.9rem;}
   .annual-hdr{align-items:flex-start;gap:8px;}
   .annual-amt{font-size:18px;white-space:nowrap;}
   .annual-sub{font-size:10.5px;line-height:1.35;word-break:keep-all;}
-
-  /* 식단 */
+  .mt-grid{grid-template-columns:1fr 1fr;}
+  .mt-field-input{font-size:14px;}
+  .month-tracker{padding:0.9rem;}
+  .hist-table th:nth-child(6),.hist-table td:nth-child(6){display:none;}
+  .hist-table th,.hist-table td{padding:7px 5px;font-size:11px;}
+  .goal-input-row{flex-wrap:wrap;}
+  .goal-input-field{min-width:0;}
+  .goal-result-row{font-size:12px;}
+  .acct-section{padding:0.9rem;}
+  .acct-name{font-size:13px;}
+  .acct-amt{font-size:13px;min-width:70px;}
+  .acct-type-tag{font-size:9px;padding:1px 5px;}
+  .debt-auto-panel{grid-template-columns:1fr;gap:7px;margin-left:0;}
+  .debt-auto-field{justify-content:space-between;}
+  .chart-section{padding:0.9rem;}
+  .chart-hdr{flex-direction:column;gap:8px;}
+  .chart-mode-row{align-items:flex-start;}
+  .chart-wrap{height:220px;}
+  .milestone-row{gap:5px;}
+  .mstone{padding:6px 8px;}
+  .mstone-amt{font-size:13px;}
   .meal-hero{grid-template-columns:1fr;}
+  .meal-target-grid{grid-template-columns:1fr;}
   .meal-summary{min-height:0;padding:1rem;}
   .meal-summary-val{font-size:24px;}
   .meal-row{grid-template-columns:66px 1fr 62px;gap:8px;padding:10px;}
@@ -347,8 +422,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .meal-note{font-size:10px;}
   .meal-menu{font-size:13px;}
   .meal-kcal{font-size:14px;}
-
-  /* 모달 */
   .modal,.dday-modal,.cal-modal{padding:1.1rem;}
 }
 </style>
@@ -451,11 +524,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
           </div>
           <div class="meal-summary-sub" id="meal-today-sub">메뉴를 수정하면 자동으로 다시 계산됩니다.</div>
         </div>
-        <div class="meal-mini">
-          <div class="meal-mini-title">식단 구성</div>
-          <div class="meal-mini-row"><span>평일 아침</span><b>단백질음료 중심</b></div>
-          <div class="meal-mini-row"><span>평일 점심</span><b>회사밥</b></div>
-          <div class="meal-mini-row"><span>주말</span><b>세 끼 식단</b></div>
+        <div class="meal-target-grid">
+          <div class="meal-target-card"><div class="meal-target-label">감량 목표</div><div class="meal-target-val">81 → 70kg</div><div class="meal-target-sub">-11kg, 천천히 꾸준히</div></div>
+          <div class="meal-target-card"><div class="meal-target-label">하루 권장</div><div class="meal-target-val">1,500~1,650</div><div class="meal-target-sub">kcal 기준</div></div>
+          <div class="meal-target-card"><div class="meal-target-label">단백질 목표</div><div class="meal-target-val">120g+</div><div class="meal-target-sub">닭가슴살·음료 활용</div></div>
         </div>
       </div>
 
@@ -686,14 +758,16 @@ let sched = {
 
 let mealPlan = {
   weekday:[
-    {label:'아침',note:'간단하게',menu:'단백질음료 1개'},
-    {label:'점심',note:'회사밥',menu:'회사밥 일반식'},
-    {label:'저녁',note:'식단',menu:'닭가슴살 샐러드 현미밥'},
+    {label:'아침',note:'출근 전 가볍게',menu:'단백질음료 100kcal 삶은계란 2개'},
+    {label:'점심',note:'회사밥은 양 조절',menu:'회사밥 일반식 밥 조금'},
+    {label:'저녁',note:'감량 메인 식단',menu:'닭가슴살 150g 두부 샐러드 고구마 1개'},
+    {label:'간식',note:'배고플 때만',menu:'단백질음료 100kcal'},
   ],
   weekend:[
-    {label:'아침',note:'주말 식단',menu:'계란 2개 그릭요거트 바나나'},
-    {label:'점심',note:'주말 식단',menu:'현미밥 닭가슴살 샐러드'},
-    {label:'저녁',note:'주말 식단',menu:'연어 샐러드 고구마'},
+    {label:'아침',note:'단백질 먼저',menu:'단백질음료 100kcal 삶은계란 2개'},
+    {label:'점심',note:'운동/활동 전후',menu:'닭가슴살 150g 샐러드 현미밥 반공기'},
+    {label:'저녁',note:'가볍게 마무리',menu:'연어 샐러드 고구마 1개'},
+    {label:'간식',note:'선택',menu:'그릭요거트 또는 단백질음료 100kcal'},
   ]
 };
 
@@ -1186,29 +1260,64 @@ setTimeout(()=>{const inp=document.getElementById('goal-add-inp');if(inp)inp.add
 // ═══════════════════════════════════════
 // MEALS
 // ═══════════════════════════════════════
+
+function normalizeMealPlan(){
+  const oldWeekday=JSON.stringify(mealPlan.weekday||[]);
+  const oldWeekend=JSON.stringify(mealPlan.weekend||[]);
+  let changed=false;
+  const weekdayLooksDefault=(oldWeekday.includes('단백질음료 1개')&&oldWeekday.includes('회사밥 일반식')&&oldWeekday.includes('닭가슴살 샐러드 현미밥'))
+    || (oldWeekday.includes('단백질음료 100kcal')&&oldWeekday.includes('회사밥 일반식 밥 반공기')&&oldWeekday.includes('아메리카노 또는 방울토마토'));
+  const weekendLooksDefault=(oldWeekend.includes('계란 2개 그릭요거트 바나나')&&oldWeekend.includes('현미밥 닭가슴살 샐러드'))
+    || (oldWeekend.includes('연어 또는 닭가슴살 샐러드 고구마')&&oldWeekend.includes('그릭요거트 또는 단백질음료 100kcal'));
+  if(weekdayLooksDefault){
+    mealPlan.weekday=[
+      {label:'아침',note:'출근 전 가볍게',menu:'단백질음료 100kcal 삶은계란 2개'},
+      {label:'점심',note:'회사밥은 양 조절',menu:'회사밥 일반식 밥 조금'},
+      {label:'저녁',note:'감량 메인 식단',menu:'닭가슴살 150g 두부 샐러드 고구마 1개'},
+      {label:'간식',note:'배고플 때만',menu:'단백질음료 100kcal'},
+    ];
+    changed=true;
+  }
+  if(weekendLooksDefault){
+    mealPlan.weekend=[
+      {label:'아침',note:'단백질 먼저',menu:'단백질음료 100kcal 삶은계란 2개'},
+      {label:'점심',note:'운동/활동 전후',menu:'닭가슴살 150g 샐러드 현미밥 반공기'},
+      {label:'저녁',note:'가볍게 마무리',menu:'연어 샐러드 고구마 1개'},
+      {label:'간식',note:'선택',menu:'그릭요거트 또는 단백질음료 100kcal'},
+    ];
+    changed=true;
+  }
+  return changed;
+}
+
 function estimateCalories(menu){
   const text=String(menu||'').toLowerCase();
   if(!text.trim())return 0;
   const rules=[
-    [/회사밥|일반식|백반/,700],[/단백질음료|프로틴|쉐이크/,180],[/닭가슴살/,180],[/샐러드/,120],
-    [/현미밥|공기밥|쌀밥|잡곡밥/,300],[/고구마/,180],[/계란|달걀/,80],[/그릭요거트|요거트/,150],[/바나나/,100],
-    [/연어/,250],[/소고기|돼지고기|고기/,350],[/두부/,160],[/라면/,520],[/김밥/,450],[/샌드위치/,420],
-    [/커피/,20],[/우유/,130],[/과자|빵/,300]
+    [/회사밥|일반식|백반/,620],[/밥 반공기|반공기/,150],[/단백질음료|프로틴|쉐이크/,100],[/닭가슴살/,165],[/샐러드/,90],
+    [/현미밥|공기밥|쌀밥|잡곡밥/,300],[/고구마/,170],[/계란|달걀|삶은계란/,80],[/그릭요거트|요거트/,130],[/바나나/,100],
+    [/연어/,240],[/소고기|돼지고기|고기/,330],[/두부/,160],[/방울토마토/,40],[/아메리카노|커피/,10],
+    [/라면/,520],[/김밥/,450],[/샌드위치/,420],[/우유/,130],[/과자|빵/,300]
   ];
   let total=0;
   rules.forEach(([re,k])=>{if(re.test(text))total+=k;});
   return total||500;
 }
 function mealDayLabel(key){return key==='weekday'?'평일':'주말';}
+function estimateProtein(menu){
+  const text=String(menu||'').toLowerCase();
+  const rules=[[/단백질음료|프로틴|쉐이크/,20],[/닭가슴살/,35],[/계란|달걀|삶은계란/,6],[/연어/,25],[/그릭요거트|요거트/,12],[/두부/,16],[/회사밥|일반식|백반/,25]];
+  let total=0;rules.forEach(([re,g])=>{if(re.test(text))total+=g;});return total;
+}
 function renderMeals(){
   ['weekday','weekend'].forEach(key=>{
     const list=document.getElementById('meal-list-'+key); if(!list)return;
     list.innerHTML='';
-    let total=0;
+    let total=0, protein=0;
     mealPlan[key].forEach((m,i)=>{
-      const kcal=estimateCalories(m.menu); total+=kcal;
+      const kcal=estimateCalories(m.menu); const p=estimateProtein(m.menu); total+=kcal; protein+=p;
       const row=document.createElement('div'); row.className='meal-row';
-      row.innerHTML='<div class="meal-time"><div class="meal-label">'+m.label+'</div><div class="meal-note">'+m.note+'</div></div>'+'<div class="meal-menu" contenteditable="true">'+m.menu+'</div>'+'<div class="meal-kcal">'+kcal+'<span>kcal</span></div>';
+      row.innerHTML='<div class="meal-time"><div class="meal-label">'+m.label+'</div><div class="meal-note">'+m.note+'</div></div>'+'<div><div class="meal-menu" contenteditable="true">'+m.menu+'</div><div class="meal-protein">단백질 약 '+p+'g</div></div>'+'<div class="meal-kcal">'+kcal+'<span>kcal</span></div>';
       row.querySelector('.meal-menu').addEventListener('blur',e=>{
         mealPlan[key][i].menu=e.target.textContent.trim();
         renderMeals();scheduleSave();
@@ -1216,12 +1325,13 @@ function renderMeals(){
       row.querySelector('.meal-menu').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
       list.appendChild(row);
     });
-    const totalEl=document.getElementById('meal-total-'+key); if(totalEl)totalEl.textContent=total.toLocaleString('ko-KR')+' kcal';
+    const totalEl=document.getElementById('meal-total-'+key); if(totalEl)totalEl.textContent=total.toLocaleString('ko-KR')+' kcal · 단백질 '+protein+'g';
   });
   const todayKey=(TODAY.getDay()===0||TODAY.getDay()===6)?'weekend':'weekday';
   const todayTotal=(mealPlan[todayKey]||[]).reduce((sum,m)=>sum+estimateCalories(m.menu),0);
+  const todayProtein=(mealPlan[todayKey]||[]).reduce((sum,m)=>sum+estimateProtein(m.menu),0);
   const total=document.getElementById('meal-today-total'); if(total)total.textContent=todayTotal.toLocaleString('ko-KR')+' kcal';
-  const sub=document.getElementById('meal-today-sub'); if(sub)sub.textContent=mealDayLabel(todayKey)+' 식단 기준 · 메뉴를 클릭해서 바로 수정';
+  const sub=document.getElementById('meal-today-sub'); if(sub)sub.textContent='173cm · 81kg → 70kg 목표 / '+mealDayLabel(todayKey)+' 기준 단백질 약 '+todayProtein+'g';
 }
 function switchMealDay(key,btn){
   document.querySelectorAll('#cat-meals .meal-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
@@ -1296,6 +1406,43 @@ function deleteDdayFromModal(){
 // ═══════════════════════════════════════
 // BUDGET
 // ═══════════════════════════════════════
+
+function debtMonthKey(d=TODAY){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+function ensureDebtAuto(a){
+  if(a.type!=='debt')return false;
+  let changed=false;
+  if(a.autoPayAmount==null){a.autoPayAmount=/오토|할부/.test(a.name)?411078:0;changed=true;}
+  if(a.autoPayDay==null){a.autoPayDay=1;changed=true;}
+  if(a.autoPayAmount>0&&!a.autoPayLast&&/오토|할부/.test(a.name)){a.autoPayLast=debtMonthKey();changed=true;}
+  return changed;
+}
+function applyDebtAutoPayments(){
+  const mk=debtMonthKey();let changed=false;
+  accounts.forEach(a=>{
+    if(a.type!=='debt')return;
+    if(ensureDebtAuto(a))changed=true;
+    const amount=Number(a.autoPayAmount)||0;const day=Math.max(1,Math.min(28,Number(a.autoPayDay)||1));
+    if(amount>0&&TODAY.getDate()>=day&&a.autoPayLast!==mk&&a.amt>0){
+      a.amt=Math.max(0,a.amt-amount);a.autoPayLast=mk;changed=true;
+    }
+  });
+  return changed;
+}
+function makeDebtAutoPanel(a,i){
+  ensureDebtAuto(a);
+  const mk=debtMonthKey();
+  const panel=document.createElement('div');panel.className='debt-auto-panel';
+  const status=(Number(a.autoPayAmount)||0)>0?(a.autoPayLast===mk?'이번 달 차감 적용됨':'차감일 지나면 자동 차감'):'자동차감 꺼짐';
+  panel.innerHTML='<div><div class="debt-auto-title">월 자동차감</div><div class="debt-auto-sub">'+status+' · 한 달에 한 번만 잔액에서 빠집니다</div></div>'+
+    '<div class="debt-auto-field"><span>금액</span><span class="debt-auto-edit" contenteditable="true">'+fmtWon(a.autoPayAmount||0)+'</span></div>'+
+    '<div class="debt-auto-field"><span>매월</span><span class="debt-auto-day" contenteditable="true">'+(a.autoPayDay||1)+'</span><span>일</span></div>';
+  panel.querySelector('.debt-auto-edit').addEventListener('focus',e=>{e.target.textContent=a.autoPayAmount||'';});
+  panel.querySelector('.debt-auto-edit').addEventListener('blur',e=>{a.autoPayAmount=parseWon(e.target.textContent);renderBudget();scheduleSave();});
+  panel.querySelector('.debt-auto-day').addEventListener('blur',e=>{a.autoPayDay=Math.max(1,Math.min(28,parseInt(e.target.textContent,10)||1));renderBudget();scheduleSave();});
+  panel.querySelectorAll('[contenteditable="true"]').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}}));
+  return panel;
+}
+
 function calcAssetTotal(){return accounts.filter(a=>a.type==='asset').reduce((s,a)=>s+a.amt,0);}
 function calcDebtTotal(){return accounts.filter(a=>a.type==='debt').reduce((s,a)=>s+a.amt,0);}
 function calcNetWorth(){return calcAssetTotal()-calcDebtTotal();}
@@ -1354,6 +1501,7 @@ function renderAccounts(){
         row.querySelector('.acct-amt').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
       }
       list.appendChild(row);
+      if(type==='debt')list.appendChild(makeDebtAutoPanel(a,i));
 
       if(a.isSecurities&&openHoldingsIdx===i){
         list.appendChild(makeHoldingsPanel(a,i));
@@ -1403,7 +1551,7 @@ function makeHoldingsPanel(a,i){
 }
 
 function addAcct(){
-  accounts.push({name:'새 계좌',amt:0,color:PALETTE[accounts.length%PALETTE.length],type:'asset'});
+  accounts.push({name:'새 계좌',amt:0,color:PALETTE[accounts.length%PALETTE.length],type:'asset',autoPayAmount:0,autoPayDay:1});
   renderBudget();scheduleSave();
 }
 function delAcct(i){accounts.splice(i,1);if(openHoldingsIdx===i)openHoldingsIdx=null;renderBudget();scheduleSave();}
@@ -1840,6 +1988,8 @@ async function init(){
   // DB 로드
   showSaveStatus('saving');
   const loaded=await sbLoad();
+  const mealPlanChanged=normalizeMealPlan();
+  const debtAutoChanged=applyDebtAutoPayments();
   showSaveStatus(loaded?'saved':'idle');
   if(loaded)setTimeout(()=>showSaveStatus('idle'),1500);
 
@@ -1858,7 +2008,7 @@ async function init(){
   },200);
 
   _ready=true; // 이제부터 자동저장 활성화
-  if(!loaded)sbSave(); // 첫 실행이면 초기값 저장
+  if(!loaded||debtAutoChanged||mealPlanChanged)sbSave(); // 첫 실행, 자동 차감, 식단 업그레이드 반영 시 저장
 }
 
 init();
