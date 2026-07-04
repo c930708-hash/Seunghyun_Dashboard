@@ -346,6 +346,27 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .meal-target-sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35;}
 .meal-protein{font-size:11px;color:var(--muted);margin-top:2px;font-weight:700;}
 
+
+/* ── MEALS FIXED LAYOUT ── */
+.meal-shell{display:flex;flex-direction:column;gap:12px;}
+.meal-hero{display:grid;grid-template-columns:1fr 1.35fr;gap:10px;align-items:stretch;margin-bottom:4px;}
+.meal-summary{background:#111827;color:#fff;border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:130px;}
+.meal-summary-label{font-size:12px;color:#D1D5DB;font-weight:800;}
+.meal-summary-val{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:800;margin-top:8px;line-height:1.1;}
+.meal-summary-sub{font-size:12px;color:#D1D5DB;margin-top:7px;line-height:1.45;word-break:keep-all;}
+.meal-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 2px;}
+.meal-day{display:none;}
+.meal-day.active{display:block;}
+.meal-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.meal-row{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:86px minmax(0,1fr) 90px;gap:12px;align-items:start;}
+.meal-time{display:flex;flex-direction:column;gap:3px;}
+.meal-label{font-size:13px;font-weight:800;color:var(--text);}
+.meal-note{font-size:11px;color:var(--muted);line-height:1.35;word-break:keep-all;}
+.meal-menu{font-size:14px;font-weight:700;line-height:1.45;outline:none;border-bottom:1.5px dashed transparent;min-height:24px;word-break:keep-all;}
+.meal-menu:focus{border-color:var(--muted);}
+.meal-kcal{justify-self:end;text-align:right;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:800;color:var(--green);white-space:nowrap;line-height:1.15;}
+.meal-kcal span{display:block;font-family:'Noto Sans KR',sans-serif;font-size:10px;color:var(--muted);font-weight:800;margin-top:2px;}
+.meal-total{margin-top:10px;background:#ECFDF5;border:1.5px solid #BBF7D0;color:#065F46;border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:800;}
 /* ── MOBILE ── */
 @media(max-width:640px){
   body{padding:0 0 4rem;}
@@ -452,10 +473,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .debt-auto-panel{margin:0 0 10px 0;padding:9px 10px;}
   .debt-auto-sub{font-size:10.5px;}
   .debt-auto-edit{min-width:0;max-width:130px;overflow-wrap:anywhere;}
-  .meal-row{grid-template-columns:58px minmax(0,1fr) 54px;gap:7px;}
+  .meal-row{grid-template-columns:58px minmax(0,1fr) 68px;gap:7px;}
   .meal-menu{line-height:1.35;word-break:keep-all;}
   .meal-protein{font-size:10px;}
-  .meal-kcal{font-size:13px;white-space:normal;line-height:1.1;}
+  .meal-kcal{font-size:13px;white-space:nowrap;line-height:1.1;} .meal-kcal span{display:inline;margin-left:1px;font-size:10px;}
   .meal-total{font-size:12px;line-height:1.35;align-items:flex-start;}
   .meal-total strong{text-align:right;}
 }
