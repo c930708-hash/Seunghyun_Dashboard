@@ -424,6 +424,41 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .meal-kcal{font-size:14px;}
   .modal,.dday-modal,.cal-modal{padding:1.1rem;}
 }
+
+/* mobile readability pass */
+@media(max-width:640px){
+  .topbar{padding:0.75rem 0.4rem;}
+  .topbar-inner{align-items:flex-start;}
+  .app-title{width:100%;font-size:16px;}
+  .cat-tabs{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+  .cat-tab{padding:7px 4px;text-align:center;}
+  .budget-grid{grid-template-columns:1fr;gap:8px;}
+  .bcard{padding:0.95rem 1rem;border-radius:12px;}
+  .bcard-val{font-size:20px;line-height:1.15;word-break:keep-all;overflow-wrap:anywhere;}
+  .bcard.networth .bcard-val{font-size:23px;}
+  .bcard-sub{font-size:10.5px;line-height:1.35;word-break:keep-all;}
+  .mt-grid{grid-template-columns:1fr;}
+  .hist-table{font-size:10.5px;}
+  .hist-table th,.hist-table td{padding:7px 4px;}
+  .acct-row{display:grid;grid-template-columns:12px minmax(0,1fr) auto;grid-template-areas:'color name del' 'color meta amount';gap:4px 8px;align-items:center;padding:10px 0;}
+  .acct-color{grid-area:color;align-self:start;margin-top:5px;}
+  .acct-name{grid-area:name;font-size:13px;min-width:0;white-space:normal;line-height:1.35;}
+  .acct-type-tag{grid-area:meta;justify-self:start;width:max-content;font-size:9px;padding:2px 6px;}
+  .acct-holdings-toggle{grid-area:meta;margin-left:42px;font-size:11px;}
+  .acct-amt{grid-area:amount;font-size:15px;min-width:0;max-width:150px;text-align:right;justify-self:end;white-space:normal;line-height:1.25;overflow-wrap:anywhere;}
+  .acct-del{grid-area:del;align-self:start;}
+  .acct-subtotal-row{font-size:12px;gap:10px;}
+  .acct-subtotal-row span:last-child{text-align:right;overflow-wrap:anywhere;}
+  .debt-auto-panel{margin:0 0 10px 0;padding:9px 10px;}
+  .debt-auto-sub{font-size:10.5px;}
+  .debt-auto-edit{min-width:0;max-width:130px;overflow-wrap:anywhere;}
+  .meal-row{grid-template-columns:58px minmax(0,1fr) 54px;gap:7px;}
+  .meal-menu{line-height:1.35;word-break:keep-all;}
+  .meal-protein{font-size:10px;}
+  .meal-kcal{font-size:13px;white-space:normal;line-height:1.1;}
+  .meal-total{font-size:12px;line-height:1.35;align-items:flex-start;}
+  .meal-total strong{text-align:right;}
+}
 </style>
 </head>
 <body>
