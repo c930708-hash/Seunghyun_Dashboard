@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>내 라이프 대시보드</title>
+<title>보연의 대시보드</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
@@ -427,58 +427,18 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
   /* 모달 */
   .modal,.dday-modal,.cal-modal{padding:1.1rem;}
-  /* 연간 저축 카드 */
-  .annual-amt{font-size:18px;}
-  .annual-sub{font-size:11px;line-height:1.5;}
-  .annual-title{font-size:13px;}
-  /* 식단 */
-  .diet-day-tab{padding:5px 10px;font-size:12px;}
-  .diet-kcal-val{font-size:17px;}
 }
-
-/* ── DIET ── */
-.diet-wrap{max-width:900px;margin:0 auto;padding:1rem 1.25rem 3rem;}
-.diet-day-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
-.diet-day-tab{padding:7px 16px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;}
-.diet-day-tab.active{background:var(--text);color:#fff;border-color:var(--text);}
-.diet-day-tab.weekend{background:#FAFBFF;border-color:#DCE3FA;}
-.diet-day-tab.weekend.active{background:#2563EB;border-color:#2563EB;}
-.diet-summary{display:flex;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap;}
-.diet-kcal-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:.9rem 1.1rem;flex:1;min-width:130px;}
-.diet-kcal-label{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:3px;}
-.diet-kcal-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;}
-.diet-kcal-sub{font-size:11px;color:var(--muted);margin-top:2px;}
-.diet-kcal-bar-wrap{height:6px;background:var(--border);border-radius:99px;margin-top:6px;overflow:hidden;}
-.diet-kcal-bar{height:100%;border-radius:99px;transition:width .3s;}
-.diet-meal-section{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;margin-bottom:10px;}
-.diet-meal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.diet-meal-title{font-size:15px;font-weight:700;}
-.diet-meal-kcal{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--bg);}
-.diet-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
-.diet-item:last-child{border-bottom:none;}
-.diet-item-name{flex:1;font-size:14px;outline:none;border-bottom:1.5px dashed transparent;cursor:text;transition:border-color .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;}
-.diet-item-name:focus{border-color:var(--muted);}
-.diet-item-kcal{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--muted);width:60px;text-align:right;outline:none;border-bottom:1.5px dashed transparent;cursor:text;background:none;border-top:none;border-left:none;border-right:none;}
-.diet-item-kcal:focus{border-color:var(--muted);}
-.diet-item-del{background:none;border:none;cursor:pointer;color:#E5E7EB;font-size:13px;padding:2px 4px;border-radius:5px;transition:color .15s;flex-shrink:0;}
-.diet-item-del:hover{color:#EF4444;}
-.diet-add-item-btn{width:100%;margin-top:8px;padding:8px;border-radius:10px;border:1.5px dashed var(--border);background:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;}
-.diet-add-item-btn:hover{border-color:var(--text);color:var(--text);}
-.diet-company-badge{font-size:11px;background:#EFF6FF;color:#2563EB;border-radius:99px;padding:2px 8px;font-weight:600;margin-left:6px;}
-.diet-target-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:1rem;flex-wrap:wrap;}
-.diet-target-input{width:80px;padding:4px 8px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;font-family:'Space Grotesk',sans-serif;font-weight:600;outline:none;}
-.diet-target-input:focus{border-color:#2563EB;}
+</style>
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="app-title">🗂 내 라이프 대시보드</div>
+    <div class="app-title">💝 보연의 대시보드</div>
     <div class="cat-tabs">
-      <button class="cat-tab active" onclick="switchCat('study',this)">📚 공부</button>
-      <button class="cat-tab" onclick="switchCat('budget',this)">💰 예산</button>
-      <button class="cat-tab" onclick="switchCat('diet',this)">🥗 식단</button>
+      
+      <button class="cat-tab active" onclick="switchCat('budget',this)">💰 예산</button>
     </div>
     <span id="sb-status" style="font-size:11px;font-weight:600;transition:color .3s;white-space:nowrap;"></span>
   </div>
@@ -706,19 +666,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<!-- ═══ DIET ═══ -->
-<div id="cat-diet" style="display:none">
-  <div class="diet-wrap">
-    <div class="diet-target-row">
-      🎯 하루 목표 칼로리
-      <input class="diet-target-input" id="diet-target-kcal" type="number" value="2000" oninput="renderDiet()"> kcal
-    </div>
-    <div class="diet-day-tabs" id="diet-day-tabs"></div>
-    <div class="diet-summary" id="diet-summary"></div>
-    <div id="diet-meals"></div>
-  </div>
-</div>
-
 <!-- D-DAY MODAL -->
 <div class="overlay" id="dday-modal" style="display:none" onclick="if(event.target===this)closeDdayModal()">
   <div class="modal">
@@ -787,20 +734,16 @@ let ddayList = [
 let ddayPickColor = PALETTE[0];
 
 let accounts = [
-  // 자산
-  {name:'신한 주거래 S20통장',amt:240022,color:'#2563EB',type:'asset'},
-  {name:'토스뱅크 통장',amt:1412490,color:'#2563EB',type:'asset'},
-  {name:'신한 청년도약계좌',amt:19600000,color:'#059669',type:'asset'},
-  {name:'청년 주택드림 청약통장',amt:8050000,color:'#059669',type:'asset'},
-  {name:'증권 계좌(주식 등)',amt:39181200,color:'#7C3AED',type:'asset',isSecurities:true,holdings:[
-    {name:'LS마린솔루션',qty:1,price:28217400},
-    {name:'KODEX SK하이닉스단일종목',qty:1,price:10367280},
-    {name:'하이트진로',qty:1,price:445800},
-  ]},
-  {name:'전세 보증금',amt:43000000,color:'#0891B2',type:'asset'},
-  {name:'현금(기본)',amt:3000000,color:'#D97706',type:'asset'},
+  // 입출금
+  {name:'카카오뱅크 통장',      amt:850000,   color:'#F59E0B', type:'asset'},
+  {name:'국민은행 통장',        amt:1200000,  color:'#2563EB', type:'asset'},
+  // 적금/저축
+  {name:'청약저축통장',         amt:5400000,  color:'#059669', type:'asset'},
+  {name:'정기적금',             amt:12000000, color:'#059669', type:'asset'},
+  // 현금/기타
+  {name:'비상금',               amt:2000000,  color:'#D97706', type:'asset'},
   // 대출
-  {name:'오토 할부',amt:10370035,color:'#DC2626',type:'debt'},
+  {name:'신용대출',             amt:5000000,  color:'#DC2626', type:'debt'},
 ];
 
 // 월별 추적 기록: {'YYYY-MM': {income, save, spend}}
@@ -876,9 +819,7 @@ function switchCat(cat,btn){
   btn.classList.add('active');
   document.getElementById('cat-study').style.display=cat==='study'?'block':'none';
   document.getElementById('cat-budget').style.display=cat==='budget'?'block':'none';
-  document.getElementById('cat-diet').style.display=cat==='diet'?'block':'none';
   if(cat==='budget')renderBudget();
-  if(cat==='diet')renderDiet();
 }
 function switchSub(sub,btn){
   document.querySelectorAll('#cat-study .sub-tab').forEach(t=>t.classList.remove('active'));
@@ -1747,152 +1688,6 @@ function renderChartActual(){
 }
 
 // ═══════════════════════════════════════
-// DIET
-// ═══════════════════════════════════════
-const DIET_DAYS = ['월','화','수','목','금','토','일'];
-const DIET_MEALS_WEEKDAY = ['아침','점심','저녁'];
-const DIET_MEALS_WEEKEND = ['아침','점심','저녁'];
-const DIET_IS_WEEKEND = [false,false,false,false,false,true,true];
-
-// 기본 칼로리 DB (일반 음식 — 수정 가능)
-const KCAL_DB = {
-  '단백질 쉐이크':150,'프로틴바':200,'삶은 달걀':80,'그릭요거트':100,'바나나':90,
-  '닭가슴살 200g':220,'현미밥':200,'잡곡밥':210,'흰쌀밥':300,'고구마':130,
-  '샐러드':80,'두부':100,'브로콜리':55,'아보카도':160,'연어 150g':220,
-  '된장찌개':120,'김치찌개':150,'삼겹살 200g':600,'순두부찌개':180,'비빔밥':550,
-  '회사 급식':700,'아메리카노':10,'라떼':120,'초코우유':200,
-};
-
-// dietData: { '월': { meals: [{name, kcal}] per meal type } }
-let dietData = {
-  '월':{ '아침':[{name:'단백질 쉐이크',kcal:150}], '점심':[{name:'회사 급식',kcal:700}], '저녁':[{name:'닭가슴살 200g',kcal:220},{name:'현미밥',kcal:200},{name:'브로콜리',kcal:55}] },
-  '화':{ '아침':[{name:'그릭요거트',kcal:100},{name:'바나나',kcal:90}], '점심':[{name:'회사 급식',kcal:700}], '저녁':[{name:'두부',kcal:100},{name:'잡곡밥',kcal:210},{name:'된장찌개',kcal:120}] },
-  '수':{ '아침':[{name:'단백질 쉐이크',kcal:150}], '점심':[{name:'회사 급식',kcal:700}], '저녁':[{name:'삼겹살 200g',kcal:600},{name:'쌈채소',kcal:30}] },
-  '목':{ '아침':[{name:'삶은 달걀',kcal:80},{name:'아메리카노',kcal:10}], '점심':[{name:'회사 급식',kcal:700}], '저녁':[{name:'연어 150g',kcal:220},{name:'고구마',kcal:130},{name:'샐러드',kcal:80}] },
-  '금':{ '아침':[{name:'단백질 쉐이크',kcal:150}], '점심':[{name:'회사 급식',kcal:700}], '저녁':[{name:'순두부찌개',kcal:180},{name:'잡곡밥',kcal:210}] },
-  '토':{ '아침':[{name:'그릭요거트',kcal:100},{name:'바나나',kcal:90}], '점심':[{name:'비빔밥',kcal:550}], '저녁':[{name:'닭가슴살 200g',kcal:220},{name:'샐러드',kcal:80},{name:'현미밥',kcal:200}] },
-  '일':{ '아침':[{name:'삶은 달걀',kcal:80},{name:'아메리카노',kcal:10}], '점심':[{name:'된장찌개',kcal:120},{name:'흰쌀밥',kcal:300}], '저녁':[{name:'닭가슴살 200g',kcal:220},{name:'두부',kcal:100},{name:'브로콜리',kcal:55}] },
-};
-
-let selectedDietDay = '월';
-
-function getDayTotalKcal(day){
-  const d=dietData[day]||{};
-  return Object.values(d).flat().reduce((s,item)=>s+(item.kcal||0),0);
-}
-function getMealKcal(day,meal){
-  return (dietData[day]?.[meal]||[]).reduce((s,i)=>s+(i.kcal||0),0);
-}
-function guessKcal(name){
-  // 이름에서 DB 키워드 매칭
-  for(const [k,v] of Object.entries(KCAL_DB)){
-    if(name.includes(k)||k.includes(name))return v;
-  }
-  return 0;
-}
-
-function renderDiet(){
-  const targetKcal=parseInt(document.getElementById('diet-target-kcal')?.value)||2000;
-  const isWE=DIET_IS_WEEKEND[DIET_DAYS.indexOf(selectedDietDay)];
-
-  // 요일 탭
-  const tabEl=document.getElementById('diet-day-tabs');tabEl.innerHTML='';
-  DIET_DAYS.forEach((d,i)=>{
-    const btn=document.createElement('button');
-    const isW=DIET_IS_WEEKEND[i];
-    btn.className='diet-day-tab'+(isW?' weekend':'')+(d===selectedDietDay?' active':'');
-    btn.textContent=d;
-    btn.onclick=()=>{selectedDietDay=d;renderDiet();scheduleSave();};
-    tabEl.appendChild(btn);
-  });
-
-  // 요약
-  const total=getDayTotalKcal(selectedDietDay);
-  const pct=Math.min(100,Math.round(total/targetKcal*100));
-  const barColor=pct>110?'#EF4444':pct>90?'#D97706':'#059669';
-  const sumEl=document.getElementById('diet-summary');
-  sumEl.innerHTML=`
-    <div class="diet-kcal-card" style="flex:2;min-width:180px">
-      <div class="diet-kcal-label">오늘 총 칼로리</div>
-      <div class="diet-kcal-val" style="color:${barColor}">${total.toLocaleString()} kcal</div>
-      <div class="diet-kcal-sub">목표 ${targetKcal.toLocaleString()} kcal · ${pct}%</div>
-      <div class="diet-kcal-bar-wrap"><div class="diet-kcal-bar" style="width:${pct}%;background:${barColor}"></div></div>
-    </div>
-    ${DIET_MEALS_WEEKDAY.map(m=>`
-    <div class="diet-kcal-card">
-      <div class="diet-kcal-label">${m}</div>
-      <div class="diet-kcal-val" style="font-size:18px">${getMealKcal(selectedDietDay,m).toLocaleString()}</div>
-      <div class="diet-kcal-sub">kcal</div>
-    </div>`).join('')}
-  `;
-
-  // 식사별 섹션
-  const mealsEl=document.getElementById('diet-meals');mealsEl.innerHTML='';
-  const meals=DIET_MEALS_WEEKDAY;
-  const mealEmoji={'아침':'🌅','점심':'☀️','저녁':'🌙'};
-  meals.forEach(meal=>{
-    const isCompanyLunch=!isWE&&meal==='점심';
-    const items=(dietData[selectedDietDay]?.[meal])||[];
-
-    const sec=document.createElement('div');sec.className='diet-meal-section';
-    const mKcal=getMealKcal(selectedDietDay,meal);
-    sec.innerHTML=`
-      <div class="diet-meal-hdr">
-        <div class="diet-meal-title">${mealEmoji[meal]||''} ${meal}${isCompanyLunch?'<span class="diet-company-badge">🏢 회사 급식</span>':''}</div>
-        <span class="diet-meal-kcal">${mKcal} kcal</span>
-      </div>
-      <div class="diet-items-list"></div>
-      ${isCompanyLunch?'':'<button class="diet-add-item-btn" onclick="addDietItem(\''+selectedDietDay+'\',\''+meal+'\')">+ 음식 추가</button>'}
-    `;
-    const itemList=sec.querySelector('.diet-items-list');
-    items.forEach((item,idx)=>{
-      const row=document.createElement('div');row.className='diet-item';
-      row.innerHTML=`
-        <input class="diet-item-name" value="${item.name}" placeholder="음식 이름">
-        <input class="diet-item-kcal" type="number" value="${item.kcal}" placeholder="kcal">
-        <button class="diet-item-del" onclick="delDietItem('${selectedDietDay}','${meal}',${idx})">✕</button>
-      `;
-      const nameInp=row.querySelector('.diet-item-name');
-      const kcalInp=row.querySelector('.diet-item-kcal');
-      nameInp.addEventListener('blur',e=>{
-        items[idx].name=e.target.value;
-        // 이름으로 칼로리 자동 추정 (칼로리가 0이거나 비어있을 때)
-        if(!items[idx].kcal){
-          const g=guessKcal(e.target.value);
-          if(g){items[idx].kcal=g;kcalInp.value=g;}
-        }
-        renderDiet();scheduleSave();
-      });
-      kcalInp.addEventListener('blur',e=>{
-        items[idx].kcal=parseInt(e.target.value)||0;
-        renderDiet();scheduleSave();
-      });
-      [nameInp,kcalInp].forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();inp.blur();}}));
-      itemList.appendChild(row);
-    });
-    mealsEl.appendChild(sec);
-  });
-}
-
-function addDietItem(day,meal){
-  if(!dietData[day])dietData[day]={};
-  if(!dietData[day][meal])dietData[day][meal]=[];
-  dietData[day][meal].push({name:'',kcal:0});
-  renderDiet();
-  // 새로 추가된 입력칸에 포커스
-  const items=document.querySelectorAll('#diet-meals .diet-meal-section');
-  const mealIdx=['아침','점심','저녁'].indexOf(meal);
-  if(items[mealIdx]){
-    const inputs=items[mealIdx].querySelectorAll('.diet-item-name');
-    if(inputs.length)inputs[inputs.length-1].focus();
-  }
-}
-function delDietItem(day,meal,idx){
-  dietData[day][meal].splice(idx,1);
-  renderDiet();scheduleSave();
-}
-
-// ═══════════════════════════════════════
 // SUPABASE 자동저장
 // ═══════════════════════════════════════
 const SB_URL = 'https://hfownymjkdiggmhzpksj.supabase.co';
@@ -1912,28 +1707,22 @@ function showSaveStatus(s){
 
 function collectState(){
   return {
-    sched, cats, ddayList, accounts, monthlyTrack, goalData, dietData, selectedDietDay,
+    sched, cats, ddayList, accounts, monthlyTrack, goalData,
     goalTargetVal:document.getElementById('goal-target')?.value||'',
     goalYearVal:document.getElementById('goal-year')?.value||'',
     goalMonthVal:document.getElementById('goal-month')?.value||'',
-    dietTargetKcal:document.getElementById('diet-target-kcal')?.value||'2000',
     chartYears, chartMode, trackYear, trackMonth, selectedGoalDate,
   };
 }
 
 function applyState(st){
   if(!st||!Object.keys(st).length)return;
-  if(st.sched){
-    if(st.sched.weekday&&st.sched.weekday.length>0) sched.weekday=st.sched.weekday;
-    if(st.sched.weekend&&st.sched.weekend.length>0) sched.weekend=st.sched.weekend;
-  }
-  if(st.cats&&st.cats.length>0)     {cats.length=0;cats.push(...st.cats);}
-  if(st.ddayList&&st.ddayList.length>0) {ddayList.length=0;ddayList.push(...st.ddayList);}
-  if(st.accounts&&st.accounts.length>0) {accounts.length=0;accounts.push(...st.accounts);}
-  if(st.monthlyTrack&&Object.keys(st.monthlyTrack).length) Object.assign(monthlyTrack,st.monthlyTrack);
+  if(st.sched)        Object.assign(sched,st.sched);
+  if(st.cats)         {cats.length=0;cats.push(...st.cats);}
+  if(st.ddayList)     {ddayList.length=0;ddayList.push(...st.ddayList);}
+  if(st.accounts)     {accounts.length=0;accounts.push(...st.accounts);}
+  if(st.monthlyTrack) Object.assign(monthlyTrack,st.monthlyTrack);
   if(st.goalData)     Object.assign(goalData,st.goalData);
-  if(st.dietData&&Object.keys(st.dietData).length) Object.assign(dietData,st.dietData);
-  if(st.selectedDietDay) selectedDietDay=st.selectedDietDay;
   if(st.chartYears)   chartYears=st.chartYears;
   if(st.chartMode)    chartMode=st.chartMode;
   if(st.trackYear!=null)  trackYear=st.trackYear;
@@ -1943,7 +1732,6 @@ function applyState(st){
     const gt=document.getElementById('goal-target'); if(gt&&st.goalTargetVal)gt.value=st.goalTargetVal;
     const gy=document.getElementById('goal-year');   if(gy&&st.goalYearVal)gy.value=st.goalYearVal;
     const gm=document.getElementById('goal-month');  if(gm&&st.goalMonthVal)gm.value=st.goalMonthVal;
-    const dk=document.getElementById('diet-target-kcal'); if(dk&&st.dietTargetKcal)dk.value=st.dietTargetKcal;
   },100);
 }
 
@@ -1953,7 +1741,7 @@ async function sbSave(){
   try{
     const body=JSON.stringify({data:collectState(),updated_at:new Date().toISOString()});
     // PATCH 먼저 시도
-    let r=await fetch(SB_URL+'/rest/v1/dashboard_data?id=eq.main',{
+    let r=await fetch(SB_URL+'/rest/v1/dashboard_data?id=eq.sister',{
       method:'PATCH',
       headers:{...SB_H,'Prefer':'return=minimal'},
       body
@@ -1984,7 +1772,7 @@ async function sbSave(){
 
 async function sbLoad(){
   try{
-    const r=await fetch(SB_URL+'/rest/v1/dashboard_data?id=eq.main&select=data',{headers:SB_H});
+    const r=await fetch(SB_URL+'/rest/v1/dashboard_data?id=eq.sister&select=data',{headers:SB_H});
     if(!r.ok)throw new Error(r.status);
     const rows=await r.json();
     if(rows&&rows[0]&&rows[0].data&&Object.keys(rows[0].data).length){
@@ -2005,7 +1793,7 @@ function scheduleSave(){
 // INIT
 // ═══════════════════════════════════════
 async function init(){
-  monthlyTrack['2026-06']={income:3793510,save:2370000,spend:1814048,saveManual:true,netWorth:null};
+  monthlyTrack['2026-06']={income:2800000,save:700000,spend:1600000,saveManual:true,netWorth:null};
 
   bindTrackInput('mt-income','income');
   bindTrackInput('mt-save','save');
@@ -2022,7 +1810,7 @@ async function init(){
     t.netWorth=calcNetWorth();
     renderBudget();scheduleSave();
   });
-  document.getElementById('goal-target').value='3억';
+  document.getElementById('goal-target').value='1억';
   document.getElementById('goal-year').value='2030';
   document.getElementById('goal-month').value='12';
   document.getElementById('forecast-controls').style.display='flex';
@@ -2034,26 +1822,20 @@ async function init(){
   showSaveStatus(loaded?'saved':'idle');
   if(loaded)setTimeout(()=>showSaveStatus('idle'),1500);
 
-  // 렌더
+  // 렌더 (래핑 없는 원본 함수 직접 호출)
   renderAll();
   renderDdayStrip();
   renderBudget();
-
-  // 예산 탭 먼저 보이게
-  document.getElementById('cat-study').style.display='none';
   document.getElementById('cat-budget').style.display='block';
-  document.getElementById('cat-diet').style.display='none';
-  // 탭 버튼 active 상태도 맞춤
-  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.cat-tab')[1]?.classList.add('active');
+  document.getElementById('cat-study').style.display='none';
 
   setTimeout(()=>{
     const inp=document.getElementById('goal-target');
     if(inp&&inp.value&&!inp.value.includes('억')&&!inp.value.includes('만'))fmtGoalInput(inp);
   },200);
 
-  _ready=true;
-  if(!loaded)sbSave();
+  _ready=true; // 이제부터 자동저장 활성화
+  if(!loaded)sbSave(); // 첫 실행이면 초기값 저장
 }
 
 init();
