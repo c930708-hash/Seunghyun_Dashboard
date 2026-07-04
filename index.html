@@ -18,7 +18,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 /* ── TOP BAR ── */
 .topbar{background:var(--card);border-bottom:1.5px solid var(--border);padding:0.9rem 1.25rem;position:sticky;top:0;z-index:100;}
 .topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
-.app-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.3px;}
+.app-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:0;outline:none;border-bottom:1.5px dashed transparent;cursor:text;}
+.app-title:focus{border-color:var(--muted);}
 .cat-tabs{display:flex;gap:6px;}
 .cat-tab{padding:7px 18px;border-radius:99px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;}
 .cat-tab.active{background:var(--text);color:#fff;border-color:var(--text);}
@@ -203,10 +204,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 /* 월별 히스토리 테이블 */
 .history-section{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.1rem;margin-bottom:1.25rem;}
-.hist-table{width:100%;border-collapse:collapse;font-size:13px;}
+.hist-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
 .hist-table th{text-align:right;padding:7px 8px;color:var(--muted);font-weight:600;font-size:11px;border-bottom:1.5px solid var(--border);}
 .hist-table th:first-child{text-align:left;}
-.hist-table td{text-align:right;padding:8px 8px;border-bottom:1px solid var(--border);font-family:'Space Grotesk',sans-serif;font-weight:600;}
+.hist-table td{text-align:right;padding:8px 8px;border-bottom:1px solid var(--border);font-family:'Space Grotesk',sans-serif;font-weight:600;white-space:nowrap;}
 .hist-table td:first-child{text-align:left;font-family:'Noto Sans KR';font-weight:600;}
 .hist-table tr:last-child td{border-bottom:none;}
 .hist-table tr.cur-month{background:var(--bg);}
@@ -215,10 +216,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 /* 연간 저축 요약 */
 .annual-card{background:linear-gradient(135deg,#ECFDF5,#F0FDF4);border:1.5px solid #BBF7D0;border-radius:var(--radius);padding:1.1rem;margin-bottom:1.25rem;}
-.annual-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.annual-title{font-size:15px;font-weight:700;color:#065F46;}
-.annual-amt{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#059669;}
-.annual-sub{font-size:12px;color:#047857;}
+.annual-hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.annual-title{font-size:15px;font-weight:700;color:#065F46;word-break:keep-all;}
+.annual-amt{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#059669;white-space:nowrap;text-align:right;}
+.annual-sub{font-size:12px;color:#047857;line-height:1.35;word-break:keep-all;}
 .annual-progress-wrap{height:8px;background:rgba(5,150,105,.15);border-radius:99px;overflow:hidden;margin-top:8px;}
 .annual-progress-fill{height:100%;background:#059669;border-radius:99px;transition:width .3s;}
 
@@ -240,7 +241,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .acct-amt{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;outline:none;border-bottom:1.5px dashed transparent;transition:border-color .15s;cursor:text;text-align:right;min-width:90px;}
 .acct-amt:focus{border-color:var(--muted);}
 .acct-amt.is-debt{color:var(--red);}
-.acct-type-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;cursor:pointer;flex-shrink:0;white-space:nowrap;}
+.acct-type-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;cursor:pointer;flex-shrink:0;white-space:nowrap;border:1px solid currentColor;background:white;}
+.acct-type-panel{margin:2px 0 8px 20px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.acct-type-panel-title{font-size:11px;font-weight:800;color:var(--muted);}
+.acct-type-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.acct-type-action{border:1.5px solid var(--border);background:white;border-radius:99px;padding:5px 10px;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;color:var(--text);}
+.acct-type-action.asset{border-color:#BBF7D0;color:#059669;}
+.acct-type-action.debt{border-color:#FECACA;color:#DC2626;}
+.acct-type-action.auto{border-color:#FECACA;background:#FFF7F7;color:#991B1B;}
 .acct-del{background:none;border:none;cursor:pointer;color:#E5E7EB;font-size:14px;padding:2px 4px;border-radius:6px;transition:color .15s;font-family:inherit;}
 .acct-del:hover{color:#EF4444;}
 .acct-subtotal-row{display:flex;justify-content:space-between;padding:8px 0 0;font-size:13px;font-weight:700;color:var(--muted);}
@@ -278,7 +286,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .goal-result-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:4px 0;}
 .goal-result-label{color:var(--muted);}
 .goal-result-val{font-family:'Space Grotesk',sans-serif;font-weight:700;}
-.goal-eta{font-size:14px;font-weight:700;color:var(--blue);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);}
+.goal-eta{font-size:12.5px;font-weight:700;color:var(--blue);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);line-height:1.45;word-break:keep-all;}
 
 /* ── CHART SECTION ── */
 .chart-section{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.1rem;}
@@ -331,11 +339,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 .hidden-col{opacity:0;position:absolute;width:0;height:0;}
 
-.debt-auto-panel{margin:3px 0 8px 20px;background:#FFF7F7;border:1.5px solid #FECACA;border-radius:10px;padding:8px 10px;display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;}
+.debt-auto-panel{margin:3px 0 8px 20px;background:#FFF7F7;border:1.5px solid #FECACA;border-radius:10px;padding:9px 11px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;}
 .debt-auto-title{font-size:11px;font-weight:800;color:#991B1B;}
 .debt-auto-sub{font-size:10px;color:#B91C1C;margin-top:2px;line-height:1.3;}
-.debt-auto-field{display:flex;align-items:center;gap:4px;font-size:10px;color:#7F1D1D;white-space:nowrap;}
-.debt-auto-edit{min-width:68px;text-align:right;font-family:'Space Grotesk',sans-serif;font-weight:800;outline:none;border-bottom:1.5px dashed transparent;color:#DC2626;cursor:text;}
+.debt-auto-field{display:flex;align-items:center;gap:6px;font-size:12px;color:#7F1D1D;white-space:nowrap;}
+.debt-auto-edit{min-width:96px;text-align:right;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:900;outline:none;border-bottom:1.5px dashed transparent;color:#DC2626;cursor:text;}
 .debt-auto-edit:focus{border-color:#DC2626;}
 .debt-auto-day{width:34px;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:800;outline:none;border-bottom:1.5px dashed transparent;color:#DC2626;cursor:text;}
 .debt-auto-day:focus{border-color:#DC2626;}
@@ -346,6 +354,41 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .meal-target-sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35;}
 .meal-protein{font-size:11px;color:var(--muted);margin-top:2px;font-weight:700;}
 
+
+
+/* ── INVESTMENT PORTFOLIO ── */
+.invest-shell{display:flex;flex-direction:column;gap:12px;}
+.invest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.invest-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1rem;}
+.invest-label{font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px;}
+.invest-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);white-space:nowrap;}
+.invest-val.good{color:var(--green);} .invest-val.bad{color:var(--red);}
+.invest-sub{font-size:11px;color:var(--muted);line-height:1.35;margin-top:4px;word-break:keep-all;}
+.portfolio-section{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.1rem;}
+.portfolio-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.portfolio-title{font-size:15px;font-weight:800;}
+.portfolio-sub{font-size:12px;color:var(--muted);margin-top:2px;word-break:keep-all;}
+.rebalance-tabs{display:flex;gap:5px;background:var(--bg);border-radius:99px;padding:3px;}
+.rebalance-tab{border:none;background:transparent;border-radius:99px;padding:5px 10px;font-size:11px;font-weight:800;color:var(--muted);cursor:pointer;font-family:inherit;}
+.rebalance-tab.active{background:white;color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.portfolio-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+.portfolio-table th{font-size:11px;color:var(--muted);font-weight:800;text-align:right;border-bottom:1.5px solid var(--border);padding:8px 5px;white-space:nowrap;}
+.portfolio-table th:first-child,.portfolio-table th:nth-child(2){text-align:left;}
+.portfolio-table td{font-size:12px;font-weight:700;text-align:right;border-bottom:1px solid var(--border);padding:8px 5px;vertical-align:middle;white-space:nowrap;}
+.portfolio-table td:first-child,.portfolio-table td:nth-child(2){text-align:left;}
+.pf-edit{outline:none;border-bottom:1.5px dashed transparent;cursor:text;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+.pf-edit:focus{border-color:var(--muted);white-space:normal;}
+.pf-name{font-size:13px;color:var(--text);}
+.pf-sector{color:var(--muted);}
+.pf-diff.good{color:var(--green);} .pf-diff.bad{color:var(--red);}
+.pf-del{background:none;border:none;color:#D1D5DB;cursor:pointer;font-size:13px;padding:2px 4px;}
+.pf-del:hover{color:#EF4444;}
+.portfolio-add{width:100%;margin-top:10px;padding:9px;border-radius:10px;border:1.5px dashed var(--border);background:none;color:var(--muted);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;}
+.portfolio-add:hover{color:var(--text);border-color:var(--text);}
+.rebalance-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+.rebalance-item{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;}
+.rebalance-name{font-size:12px;font-weight:800;}
+.rebalance-note{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35;}
 
 /* ── MEALS FIXED LAYOUT ── */
 .meal-shell{display:flex;flex-direction:column;gap:12px;}
@@ -409,15 +452,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .bcard-val{font-size:17px;}
   .bcard.networth .bcard-val{font-size:20px;}
   .bcard-label{font-size:11px;}
-  .annual-card{padding:0.9rem;}
+  .annual-card{padding:0.85rem;}
   .annual-hdr{align-items:flex-start;gap:8px;}
-  .annual-amt{font-size:18px;white-space:nowrap;}
-  .annual-sub{font-size:10.5px;line-height:1.35;word-break:keep-all;}
+  .annual-amt{font-size:17px;white-space:nowrap;}
+  .annual-sub{font-size:10px;line-height:1.3;word-break:keep-all;}
   .mt-grid{grid-template-columns:1fr 1fr;}
   .mt-field-input{font-size:14px;}
   .month-tracker{padding:0.9rem;}
   .hist-table th:nth-child(6),.hist-table td:nth-child(6){display:none;}
-  .hist-table th,.hist-table td{padding:7px 5px;font-size:11px;}
+  .hist-table th,.hist-table td{padding:7px 3px;font-size:10px;white-space:nowrap;}
   .goal-input-row{flex-wrap:wrap;}
   .goal-input-field{min-width:0;}
   .goal-result-row{font-size:12px;}
@@ -451,7 +494,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .topbar{padding:0.75rem 0.4rem;}
   .topbar-inner{align-items:flex-start;}
   .app-title{width:100%;font-size:16px;}
-  .cat-tabs{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+  .cat-tabs{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;}
   .cat-tab{padding:7px 4px;text-align:center;}
   .budget-grid{grid-template-columns:1fr;gap:8px;}
   .bcard{padding:0.95rem 1rem;border-radius:12px;}
@@ -459,8 +502,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .bcard.networth .bcard-val{font-size:23px;}
   .bcard-sub{font-size:10.5px;line-height:1.35;word-break:keep-all;}
   .mt-grid{grid-template-columns:1fr;}
-  .hist-table{font-size:10.5px;}
-  .hist-table th,.hist-table td{padding:7px 4px;}
+  .hist-table{font-size:9.5px;}
+  .hist-table th,.hist-table td{padding:7px 2px;font-size:9.5px;white-space:nowrap;}
+  .hist-table th:first-child,.hist-table td:first-child{width:52px;}
   .acct-row{display:grid;grid-template-columns:12px minmax(0,1fr) auto;grid-template-areas:'color name del' 'color meta amount';gap:4px 8px;align-items:center;padding:10px 0;}
   .acct-color{grid-area:color;align-self:start;margin-top:5px;}
   .acct-name{grid-area:name;font-size:13px;min-width:0;white-space:normal;line-height:1.35;}
@@ -473,6 +517,22 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .debt-auto-panel{margin:0 0 8px 0;padding:8px 9px;}
   .debt-auto-sub{font-size:10.5px;}
   .debt-auto-edit{min-width:0;max-width:130px;overflow-wrap:anywhere;}
+  .goal-section{padding:0.95rem;}
+  .goal-result{padding:10px 11px;}
+  .goal-result-row{font-size:12px;gap:8px;}
+  .goal-result-val{white-space:nowrap;text-align:right;}
+  .goal-eta{font-size:11px;font-weight:600;line-height:1.4;}
+  .goal-compare{font-size:11px;line-height:1.4;}
+  .acct-type-panel{margin:0 0 8px 0;padding:8px 9px;}
+  .debt-auto-panel{grid-template-columns:1fr;gap:7px;}
+  .debt-auto-edit{font-size:14px;min-width:100px;}
+  .invest-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .invest-card{padding:0.85rem;}
+  .invest-val{font-size:18px;}
+  .portfolio-section{padding:0.95rem;}
+  .portfolio-table th,.portfolio-table td{font-size:10px;padding:7px 3px;}
+  .portfolio-table th:nth-child(2),.portfolio-table td:nth-child(2){display:none;}
+  .rebalance-list{grid-template-columns:1fr;}
   .meal-row{grid-template-columns:58px minmax(0,1fr) 68px;gap:7px;}
   .meal-menu{line-height:1.35;word-break:keep-all;}
   .meal-protein{font-size:10px;}
@@ -487,10 +547,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="app-title">💝 승현의 대시보드</div>
+    <div class="app-title" id="app-title" contenteditable="true" title="클릭해서 제목 수정">💝 승현의 대시보드</div>
     <div class="cat-tabs">
       <button class="cat-tab active" onclick="switchCat('budget',this)">💰 예산</button>
       <button class="cat-tab" onclick="switchCat('study',this)">📚 공부</button>
+      <button class="cat-tab" onclick="switchCat('invest',this)">📈 투자</button>
       <button class="cat-tab" onclick="switchCat('meals',this)">🍱 식단</button>
     </div>
     <span id="sb-status" style="font-size:11px;font-weight:600;transition:color .3s;white-space:nowrap;"></span>
@@ -602,6 +663,43 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
   </div>
+
+  <!-- ═══ INVESTMENT ═══ -->
+  <div class="view" id="cat-invest">
+    <div class="invest-shell">
+      <div class="invest-grid">
+        <div class="invest-card"><div class="invest-label">총 주식 투자금액</div><div class="invest-val" id="invest-total">0원</div><div class="invest-sub">예산의 증권계좌와 자동 연동</div></div>
+        <div class="invest-card"><div class="invest-label">평가손익</div><div class="invest-val" id="invest-profit">0원</div><div class="invest-sub" id="invest-profit-sub">수익률 0%</div></div>
+        <div class="invest-card"><div class="invest-label">보유 종목</div><div class="invest-val" id="invest-count">0개</div><div class="invest-sub">분야별 비중 관리</div></div>
+        <div class="invest-card"><div class="invest-label">리밸런싱</div><div class="invest-val" id="invest-cycle">분기</div><div class="invest-sub" id="invest-next">다음 점검일 계산</div></div>
+      </div>
+
+      <div class="portfolio-section">
+        <div class="portfolio-head">
+          <div><div class="portfolio-title">📊 주식 포트폴리오</div><div class="portfolio-sub">종목/분야/목표비중/투자원금/평가금액을 수정하면 예산의 증권계좌 합계도 같이 바뀝니다.</div></div>
+          <div class="rebalance-tabs">
+            <button class="rebalance-tab" id="reb-monthly" onclick="setRebalanceCycle('monthly')">매월</button>
+            <button class="rebalance-tab" id="reb-quarterly" onclick="setRebalanceCycle('quarterly')">분기</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="portfolio-table">
+            <thead><tr><th>종목</th><th>분야</th><th>목표</th><th>현재</th><th>평가금액</th><th>수익</th><th></th></tr></thead>
+            <tbody id="portfolio-body"></tbody>
+          </table>
+        </div>
+        <button class="portfolio-add" onclick="addPortfolioItem()">+ 종목 추가</button>
+      </div>
+
+      <div class="portfolio-section">
+        <div class="portfolio-head">
+          <div><div class="portfolio-title">🧭 리밸런싱 메모</div><div class="portfolio-sub">목표 비중과 현재 비중 차이가 큰 종목을 자동으로 표시합니다.</div></div>
+        </div>
+        <div class="rebalance-list" id="rebalance-list"></div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ═══ BUDGET ═══ -->
   <div class="view" id="cat-budget">
@@ -849,6 +947,10 @@ let accounts = [
   {name:'신용대출',             amt:5000000,  color:'#DC2626', type:'debt'},
 ];
 
+let portfolio = [];
+let investmentPlan = { cycle:'quarterly' };
+let dashboardTitle = '💝 승현의 대시보드';
+
 // 월별 추적 기록: {'YYYY-MM': {income, save, spend}}
 let monthlyTrack = {};
 let trackYear, trackMonth;
@@ -922,8 +1024,10 @@ function switchCat(cat,btn){
   btn.classList.add('active');
   document.getElementById('cat-budget').style.display=cat==='budget'?'block':'none';
   document.getElementById('cat-study').style.display=cat==='study'?'block':'none';
+  document.getElementById('cat-invest').style.display=cat==='invest'?'block':'none';
   document.getElementById('cat-meals').style.display=cat==='meals'?'block':'none';
   if(cat==='budget')renderBudget();
+  if(cat==='invest')renderInvest();
   if(cat==='meals')renderMeals();
 }
 function switchSub(sub,btn){
@@ -1464,12 +1568,14 @@ function deleteDdayFromModal(){
 // ═══════════════════════════════════════
 
 function debtMonthKey(d=TODAY){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+function prevDebtMonthKey(d=TODAY){const p=new Date(d.getFullYear(),d.getMonth()-1,1);return debtMonthKey(p);}
 function ensureDebtAuto(a){
   if(a.type!=='debt')return false;
   let changed=false;
   if(a.autoPayAmount==null){a.autoPayAmount=/오토|할부/.test(a.name)?411078:0;changed=true;}
   if(a.autoPayDay==null){a.autoPayDay=1;changed=true;}
-  if(a.autoPayAmount>0&&!a.autoPayLast&&/오토|할부/.test(a.name)){a.autoPayLast=debtMonthKey();changed=true;}
+  if(a.autoPayAmount>0&&!a.autoPayLast&&/오토|할부/.test(a.name)){a.autoPayLast=prevDebtMonthKey();changed=true;}
+  if(a.autoPayAmount>0&&a.autoPayVersion!==2){if(/오토|할부/.test(a.name)&&a.autoPayLast===debtMonthKey())a.autoPayLast=prevDebtMonthKey();a.autoPayVersion=2;changed=true;}
   return changed;
 }
 function applyDebtAutoPayments(){
@@ -1477,9 +1583,9 @@ function applyDebtAutoPayments(){
   accounts.forEach(a=>{
     if(a.type!=='debt')return;
     if(ensureDebtAuto(a))changed=true;
-    const amount=Number(a.autoPayAmount)||0;const day=Math.max(1,Math.min(28,Number(a.autoPayDay)||1));
-    if(amount>0&&TODAY.getDate()>=day&&a.autoPayLast!==mk&&a.amt>0){
-      a.amt=Math.max(0,a.amt-amount);a.autoPayLast=mk;changed=true;
+    const amount=Number(a.autoPayAmount)||0;
+    if(amount>0&&a.autoPayLast!==mk&&a.amt>0){
+      a.amt=Math.max(0,a.amt-amount);a.autoPayLast=mk;a.autoPayAppliedAt=new Date().toISOString();changed=true;
     }
   });
   return changed;
@@ -1488,13 +1594,11 @@ function makeDebtAutoPanel(a,i){
   ensureDebtAuto(a);
   const mk=debtMonthKey();
   const panel=document.createElement('div');panel.className='debt-auto-panel';
-  const status=(Number(a.autoPayAmount)||0)>0?(a.autoPayLast===mk?'이번 달 차감 적용됨':'차감일 지나면 자동 차감'):'자동차감 꺼짐';
+  const status=(Number(a.autoPayAmount)||0)>0?(a.autoPayLast===mk?'이번 달 자동차감 완료':'다음 달 자동차감 예정'):'자동차감 꺼짐';
   panel.innerHTML='<div><div class="debt-auto-title">자동차감 설정</div><div class="debt-auto-sub">'+status+'</div></div>'+
-    '<div class="debt-auto-field"><span>금액</span><span class="debt-auto-edit" contenteditable="true">'+fmtWon(a.autoPayAmount||0)+'</span></div>'+
-    '<div class="debt-auto-field"><span>매월</span><span class="debt-auto-day" contenteditable="true">'+(a.autoPayDay||1)+'</span><span>일</span></div>';
+    '<div class="debt-auto-field"><span>차감액</span><span class="debt-auto-edit" contenteditable="true">'+fmtWon(a.autoPayAmount||0)+'</span></div>';
   panel.querySelector('.debt-auto-edit').addEventListener('focus',e=>{e.target.textContent=a.autoPayAmount||'';});
   panel.querySelector('.debt-auto-edit').addEventListener('blur',e=>{a.autoPayAmount=parseWon(e.target.textContent);renderBudget();scheduleSave();});
-  panel.querySelector('.debt-auto-day').addEventListener('blur',e=>{a.autoPayDay=Math.max(1,Math.min(28,parseInt(e.target.textContent,10)||1));renderBudget();scheduleSave();});
   panel.querySelectorAll('[contenteditable="true"]').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}}));
   return panel;
 }
@@ -1511,6 +1615,7 @@ function getTrack(y,m){
 }
 
 function renderBudget(){
+  seedPortfolioFromSecurities();syncPortfolioToSecurities();
   const netWorth=calcNetWorth();
   document.getElementById('bd-networth').textContent=fmtWon(netWorth);
   document.getElementById('bd-networth-sub').textContent='자산 '+fmtWon(calcAssetTotal())+' − 대출 '+fmtWon(calcDebtTotal());
@@ -1534,6 +1639,7 @@ function renderBudget(){
 // ── 계좌 ──
 let openHoldingsIdx=null;
 let openDebtOptionsIdx=null;
+let openAcctOptionsIdx=null;
 function calcHoldingsTotal(a){return(a.holdings||[]).reduce((s,h)=>s+h.qty*h.price,0);}
 
 function renderAccounts(){
@@ -1552,10 +1658,8 @@ function renderAccounts(){
         <span class="acct-amt ${type==='debt'?'is-debt':''}" contenteditable="${!a.isSecurities}" ${a.isSecurities?'style="cursor:default;color:var(--muted)"':''}>${fmtWon(a.amt)}</span>
         <button class="acct-del" onclick="delAcct(${i})">✕</button>`;
       const typeBtn=row.querySelector('.acct-type-tag');
-      if(type==='debt'){
-        typeBtn.onclick=e=>{e.preventDefault();toggleDebtOptions(i);};
-        typeBtn.title='자동차감 설정';
-      }
+      typeBtn.onclick=e=>{e.preventDefault();toggleAcctOptions(i);};
+      typeBtn.title='자산/대출 설정';
       row.querySelector('.acct-name').addEventListener('blur',e=>{accounts[i].name=e.target.textContent;scheduleSave();});
       if(!a.isSecurities){
         row.querySelector('.acct-amt').addEventListener('focus',e=>{e.target.textContent=accounts[i].amt||'';});
@@ -1563,6 +1667,7 @@ function renderAccounts(){
         row.querySelector('.acct-amt').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
       }
       list.appendChild(row);
+      if(openAcctOptionsIdx===i)list.appendChild(makeAcctOptionsPanel(a,i));
       if(type==='debt'&&openDebtOptionsIdx===i)list.appendChild(makeDebtAutoPanel(a,i));
 
       if(a.isSecurities&&openHoldingsIdx===i){
@@ -1575,7 +1680,18 @@ function renderAccounts(){
 }
 
 function toggleHoldings(i){openHoldingsIdx=openHoldingsIdx===i?null:i;renderAccounts();}
+function toggleAcctOptions(i){openAcctOptionsIdx=openAcctOptionsIdx===i?null:i;renderAccounts();}
 function toggleDebtOptions(i){openDebtOptionsIdx=openDebtOptionsIdx===i?null:i;renderAccounts();}
+function makeAcctOptionsPanel(a,i){
+  const panel=document.createElement('div');panel.className='acct-type-panel';
+  const isDebt=a.type==='debt';
+  panel.innerHTML='<div class="acct-type-panel-title">계좌 구분 설정</div><div class="acct-type-actions">'+
+    '<button class="acct-type-action asset" onclick="setAcctType('+i+',\'asset\')">자산으로 설정</button>'+
+    '<button class="acct-type-action debt" onclick="setAcctType('+i+',\'debt\')">대출로 설정</button>'+
+    (isDebt?'<button class="acct-type-action auto" onclick="toggleDebtOptions('+i+')">자동차감 설정</button>':'')+
+    '</div>';
+  return panel;
+}
 
 function makeHoldingsPanel(a,i){
   const panel=document.createElement('div');panel.className='holdings-panel';
@@ -1617,14 +1733,88 @@ function addAcct(){
   accounts.push({name:'새 계좌',amt:0,color:PALETTE[accounts.length%PALETTE.length],type:'asset',autoPayAmount:0,autoPayDay:1});
   renderBudget();scheduleSave();
 }
-function delAcct(i){accounts.splice(i,1);if(openHoldingsIdx===i)openHoldingsIdx=null;if(openDebtOptionsIdx===i)openDebtOptionsIdx=null;renderBudget();scheduleSave();}
-function toggleAcctType(i){accounts[i].type=accounts[i].type==='asset'?'debt':'asset';if(accounts[i].type!=='debt'&&openDebtOptionsIdx===i)openDebtOptionsIdx=null;renderBudget();scheduleSave();}
+function delAcct(i){accounts.splice(i,1);if(openHoldingsIdx===i)openHoldingsIdx=null;if(openDebtOptionsIdx===i)openDebtOptionsIdx=null;if(openAcctOptionsIdx===i)openAcctOptionsIdx=null;renderBudget();scheduleSave();}
+function toggleAcctType(i){toggleAcctOptions(i);}
+function setAcctType(i,type){accounts[i].type=type;if(type!=='debt'&&openDebtOptionsIdx===i)openDebtOptionsIdx=null;openAcctOptionsIdx=null;renderBudget();scheduleSave();}
 function pickAcctColor(i){
   const inp=document.getElementById('global-color-inp');
   inp.value=accounts[i].color;
   inp.onchange=()=>{accounts[i].color=inp.value;renderBudget();scheduleSave();};
   inp.click();
 }
+
+// ── 투자 포트폴리오 ──
+function getSecuritiesAccount(){
+  let acct=accounts.find(a=>a.isSecurities)||accounts.find(a=>/증권|주식|투자/.test(a.name)&&a.type==='asset');
+  if(!acct){
+    acct={name:'증권 계좌(주식 등)',amt:0,color:'#7C3AED',type:'asset',isSecurities:true,holdings:[]};
+    accounts.push(acct);
+  }
+  acct.isSecurities=true; if(!acct.holdings)acct.holdings=[];
+  return acct;
+}
+function seedPortfolioFromSecurities(){
+  const acct=getSecuritiesAccount();
+  if(portfolio.length||!acct.holdings||!acct.holdings.length)return;
+  const target=Math.floor(100/acct.holdings.length);
+  portfolio=acct.holdings.map((h,idx)=>({name:h.name||'종목',sector:'미분류',targetPct:idx===0?100-target*(acct.holdings.length-1):target,cost:h.qty*h.price,value:h.qty*h.price}));
+}
+function syncPortfolioToSecurities(){
+  const acct=getSecuritiesAccount();
+  acct.holdings=portfolio.map(p=>({name:p.name,qty:1,price:Number(p.value)||0}));
+  acct.amt=portfolio.reduce((s,p)=>s+(Number(p.value)||0),0);
+}
+function calcPortfolioTotal(){return portfolio.reduce((s,p)=>s+(Number(p.value)||0),0);}
+function calcPortfolioCost(){return portfolio.reduce((s,p)=>s+(Number(p.cost)||0),0);}
+function renderInvest(){
+  seedPortfolioFromSecurities();syncPortfolioToSecurities();
+  const total=calcPortfolioTotal(), cost=calcPortfolioCost(), profit=total-cost, rate=cost?Math.round(profit/cost*1000)/10:0;
+  document.getElementById('invest-total').textContent=fmtWon(total);
+  const profitEl=document.getElementById('invest-profit');profitEl.textContent=fmtWon(profit);profitEl.className='invest-val '+(profit>=0?'good':'bad');
+  document.getElementById('invest-profit-sub').textContent='수익률 '+rate+'%';
+  document.getElementById('invest-count').textContent=portfolio.length+'개';
+  document.getElementById('invest-cycle').textContent=investmentPlan.cycle==='monthly'?'매월':'분기';
+  document.getElementById('invest-next').textContent=nextRebalanceText();
+  document.querySelectorAll('.rebalance-tab').forEach(b=>b.classList.remove('active'));
+  const active=document.getElementById(investmentPlan.cycle==='monthly'?'reb-monthly':'reb-quarterly');if(active)active.classList.add('active');
+  const body=document.getElementById('portfolio-body');
+  if(!portfolio.length){
+    body.innerHTML='<tr><td colspan="7" class="hist-empty">종목을 추가하면 포트폴리오가 만들어져요</td></tr>';
+  }else{
+    body.innerHTML=portfolio.map((p,i)=>{
+      const value=Number(p.value)||0,cost=Number(p.cost)||0,current=total?Math.round(value/total*1000)/10:0,diff=Math.round((current-(Number(p.targetPct)||0))*10)/10,ret=cost?Math.round((value-cost)/cost*1000)/10:0;
+      return '<tr><td><span class="pf-edit pf-name" contenteditable="true" data-pf="'+i+'" data-field="name">'+p.name+'</span></td>'+
+        '<td><span class="pf-edit pf-sector" contenteditable="true" data-pf="'+i+'" data-field="sector">'+p.sector+'</span></td>'+
+        '<td><span class="pf-edit" contenteditable="true" data-pf="'+i+'" data-field="targetPct">'+(p.targetPct||0)+'</span>%</td>'+
+        '<td>'+current+'%</td><td><span class="pf-edit" contenteditable="true" data-pf="'+i+'" data-field="value">'+fmtWon(value)+'</span></td>'+
+        '<td class="'+(ret>=0?'hist-pos':'hist-neg')+'">'+ret+'%</td><td><button class="pf-del" onclick="delPortfolioItem('+i+')">✕</button></td></tr>';
+    }).join('');
+    body.querySelectorAll('.pf-edit').forEach(el=>{
+      el.addEventListener('focus',e=>{const p=portfolio[+e.target.dataset.pf],f=e.target.dataset.field;if(f==='value'||f==='cost')e.target.textContent=p[f]||'';});
+      el.addEventListener('blur',e=>{const p=portfolio[+e.target.dataset.pf],f=e.target.dataset.field;let v=e.target.textContent.trim();if(f==='value'||f==='cost')v=parseWon(v);if(f==='targetPct')v=Math.max(0,Math.min(100,parseFloat(v)||0));p[f]=v;renderInvest();renderBudget();scheduleSave();});
+      el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
+    });
+  }
+  renderRebalanceList(total);
+}
+function renderRebalanceList(total){
+  const list=document.getElementById('rebalance-list'); if(!list)return;
+  if(!portfolio.length){list.innerHTML='<div class="rebalance-item"><div class="rebalance-name">종목 없음</div><div class="rebalance-note">종목을 추가하면 목표 비중과 현재 비중 차이를 보여줍니다.</div></div>';return;}
+  list.innerHTML=portfolio.map(p=>{
+    const current=total?Math.round((Number(p.value)||0)/total*1000)/10:0,target=Number(p.targetPct)||0,diff=Math.round((current-target)*10)/10;
+    const action=Math.abs(diff)<3?'유지':diff>0?'비중 높음':'비중 낮음';
+    const note=Math.abs(diff)<3?'목표와 거의 맞아요.':diff>0?'다음 리밸런싱 때 일부 매도/추가매수 보류 후보예요.':'다음 리밸런싱 때 추가매수 후보예요.';
+    return '<div class="rebalance-item"><div class="rebalance-name">'+p.name+' · '+action+' '+diff+'%p</div><div class="rebalance-note">'+note+'</div></div>';
+  }).join('');
+}
+function nextRebalanceText(){
+  const d=new Date(TODAY); const add=investmentPlan.cycle==='monthly'?1:3; d.setMonth(d.getMonth()+add,1);
+  return '다음 점검 '+d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0');
+}
+function setRebalanceCycle(cycle){investmentPlan.cycle=cycle;renderInvest();scheduleSave();}
+function addPortfolioItem(){portfolio.push({name:'새 종목',sector:'미분류',targetPct:0,cost:0,value:0});renderInvest();renderBudget();scheduleSave();}
+function delPortfolioItem(i){portfolio.splice(i,1);renderInvest();renderBudget();scheduleSave();}
+
 
 // ── 월별 추적 ──
 function changeTrackMonth(d){
@@ -1678,6 +1868,7 @@ function resetSaveAuto(){
 }
 
 // ── 히스토리 테이블 ──
+function fmtHistWon(v){return fmtWon(v).replace(/\s+/g,'');}
 function renderHistory(){
   const tbody=document.getElementById('hist-tbody');
   const keys=Object.keys(monthlyTrack).filter(k=>{const t=monthlyTrack[k];return t.income||t.save||t.spend;}).sort().reverse();
@@ -1691,13 +1882,13 @@ function renderHistory(){
     const t=monthlyTrack[k];
     const net=t.income-t.save-t.spend;
     const [y,m]=k.split('-');
-    const nw=(t.netWorth!=null)?fmtWon(t.netWorth):'<span style="color:#D1D5DB">—</span>';
+    const nw=(t.netWorth!=null)?fmtHistWon(t.netWorth):'<span style="color:#D1D5DB">—</span>';
     return `<tr class="${k===curKey?'cur-month':''}">
       <td>${y}.${m}</td>
-      <td>${fmtWon(t.income)}</td>
-      <td class="hist-pos">${fmtWon(t.save)}</td>
-      <td class="hist-neg">${fmtWon(t.spend)}</td>
-      <td class="${net>=0?'hist-pos':'hist-neg'}">${fmtWon(net)}</td>
+      <td>${fmtHistWon(t.income)}</td>
+      <td class="hist-pos">${fmtHistWon(t.save)}</td>
+      <td class="hist-neg">${fmtHistWon(t.spend)}</td>
+      <td class="${net>=0?'hist-pos':'hist-neg'}">${fmtHistWon(net)}</td>
       <td>${nw}</td>
     </tr>`;
   }).join('');
@@ -1711,7 +1902,7 @@ function renderAnnualSavings(){
     if(k.startsWith(curYear+'-')){total+=monthlyTrack[k].save||0;count++;}
   });
   document.getElementById('annual-total').textContent=fmtWon(total);
-  document.getElementById('annual-sub').textContent=curYear+'년 '+count+'개월 기록 누적 · 평균 월 '+fmtWon(count?Math.round(total/count):0);
+  document.getElementById('annual-sub').textContent=count+'개월 누적 · 월평균 '+fmtWon(count?Math.round(total/count):0);
   const target=goalTarget||0;
   const pct=target>0?Math.min(100,Math.round(total/target*100)):0;
   document.getElementById('annual-fill').style.width=pct+'%';
@@ -1942,7 +2133,7 @@ function showSaveStatus(s){
 
 function collectState(){
   return {
-    sched, cats, ddayList, accounts, monthlyTrack, goalData, mealPlan,
+    sched, cats, ddayList, accounts, monthlyTrack, goalData, mealPlan, portfolio, investmentPlan, dashboardTitle,
     goalTargetVal:document.getElementById('goal-target')?.value||'',
     goalYearVal:document.getElementById('goal-year')?.value||'',
     goalMonthVal:document.getElementById('goal-month')?.value||'',
@@ -1959,6 +2150,9 @@ function applyState(st){
   if(st.monthlyTrack) Object.assign(monthlyTrack,st.monthlyTrack);
   if(st.goalData)     Object.assign(goalData,st.goalData);
   if(st.mealPlan)     Object.assign(mealPlan,st.mealPlan);
+  if(st.portfolio)    {portfolio.length=0;portfolio.push(...st.portfolio);}
+  if(st.investmentPlan) Object.assign(investmentPlan,st.investmentPlan);
+  if(st.dashboardTitle){dashboardTitle=st.dashboardTitle;const titleEl=document.getElementById('app-title');if(titleEl)titleEl.textContent=dashboardTitle;document.title=dashboardTitle.replace(/^\S+\s*/,'')||dashboardTitle;}
   if(st.chartYears)   chartYears=st.chartYears;
   if(st.chartMode)    chartMode=st.chartMode;
   if(st.trackYear!=null)  trackYear=st.trackYear;
@@ -2024,9 +2218,18 @@ function scheduleSave(){
 // ═══════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════
+function setupDashboardTitle(){
+  const el=document.getElementById('app-title'); if(!el)return;
+  el.textContent=dashboardTitle;
+  el.addEventListener('blur',()=>{dashboardTitle=el.textContent.trim()||'💝 승현의 대시보드';el.textContent=dashboardTitle;document.title=dashboardTitle.replace(/^\S+\s*/,'')||dashboardTitle;scheduleSave();});
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();el.blur();}});
+}
+
+
 async function init(){
   monthlyTrack['2026-06']={income:2800000,save:700000,spend:1600000,saveManual:true,netWorth:null};
 
+  setupDashboardTitle();
   bindTrackInput('mt-income','income');
   bindTrackInput('mt-save','save');
   bindTrackInput('mt-spend','spend');
@@ -2060,9 +2263,11 @@ async function init(){
   renderAll();
   renderDdayStrip();
   renderBudget();
+  renderInvest();
   renderMeals();
   document.getElementById('cat-budget').style.display='block';
   document.getElementById('cat-study').style.display='none';
+  document.getElementById('cat-invest').style.display='none';
   document.getElementById('cat-meals').style.display='none';
 
   setTimeout(()=>{
