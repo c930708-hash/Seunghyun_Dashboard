@@ -401,15 +401,43 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .meal-day{display:none;}
 .meal-day.active{display:block;}
 .meal-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
-.meal-row{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:86px minmax(0,1fr) 90px;gap:12px;align-items:start;}
+.meal-row{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:86px minmax(0,1fr) 98px;gap:12px;align-items:start;}
 .meal-time{display:flex;flex-direction:column;gap:3px;}
-.meal-label{font-size:13px;font-weight:800;color:var(--text);}
-.meal-note{font-size:11px;color:var(--muted);line-height:1.35;word-break:keep-all;}
-.meal-menu{font-size:14px;font-weight:700;line-height:1.45;outline:none;border-bottom:1.5px dashed transparent;min-height:24px;word-break:keep-all;}
-.meal-menu:focus{border-color:var(--muted);}
+.meal-label{font-size:13px;font-weight:800;color:var(--text);outline:none;border-bottom:1.5px dashed transparent;cursor:text;}
+.meal-label:focus{border-color:var(--muted);}
+.meal-note{font-size:11px;color:var(--muted);line-height:1.35;word-break:keep-all;outline:none;border-bottom:1.5px dashed transparent;cursor:text;}
+.meal-note:focus{border-color:var(--muted);}
+.meal-menu{font-size:13px;font-weight:800;line-height:1.45;color:var(--text);word-break:keep-all;margin-bottom:7px;}
+.meal-food-list{display:flex;flex-direction:column;gap:6px;}
+.meal-food-row{display:grid;grid-template-columns:minmax(0,1fr) 74px 92px 22px;gap:6px;align-items:center;background:var(--bg);border-radius:10px;padding:7px 8px;}
+.meal-food-sel{width:100%;border:1.5px solid var(--border);border-radius:8px;background:white;font-family:inherit;font-size:12px;font-weight:700;padding:6px 7px;outline:none;}
+.meal-food-sel:focus{border-color:var(--blue);}
+.meal-qty-ctrl{display:grid;grid-template-columns:22px 1fr 22px;align-items:center;border:1.5px solid var(--border);border-radius:8px;background:white;overflow:hidden;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:800;}
+.meal-qty-ctrl button{border:none;background:white;color:var(--muted);font-size:14px;font-weight:900;cursor:pointer;padding:5px 0;}
+.meal-qty-ctrl button:hover{background:var(--bg);color:var(--text);}
+.meal-qty-ctrl span{text-align:center;}
+.meal-food-macro{font-size:11px;font-weight:800;color:var(--muted);text-align:right;line-height:1.25;white-space:nowrap;}
+.meal-food-del{background:none;border:none;color:#D1D5DB;cursor:pointer;font-size:13px;padding:2px;}
+.meal-food-del:hover{color:#EF4444;}
+.meal-add-food{margin-top:7px;border:1.5px dashed var(--border);background:none;color:var(--muted);border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;}
+.meal-add-food:hover{border-color:var(--text);color:var(--text);}
 .meal-kcal{justify-self:end;text-align:right;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:800;color:var(--green);white-space:nowrap;line-height:1.15;}
 .meal-kcal span{display:block;font-family:'Noto Sans KR',sans-serif;font-size:10px;color:var(--muted);font-weight:800;margin-top:2px;}
+.meal-protein-total{font-size:11px;color:var(--muted);font-weight:800;margin-top:4px;}
 .meal-total{margin-top:10px;background:#ECFDF5;border:1.5px solid #BBF7D0;color:#065F46;border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:800;}
+.food-lib{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1rem;margin-top:12px;}
+.food-lib-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.food-lib-title{font-size:15px;font-weight:800;}
+.food-lib-sub{font-size:12px;color:var(--muted);line-height:1.35;margin-top:2px;word-break:keep-all;}
+.food-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+.food-table th{font-size:11px;color:var(--muted);font-weight:800;text-align:right;border-bottom:1.5px solid var(--border);padding:7px 5px;white-space:nowrap;}
+.food-table th:first-child,.food-table td:first-child{text-align:left;}
+.food-table td{font-size:12px;font-weight:700;text-align:right;border-bottom:1px solid var(--border);padding:7px 5px;white-space:nowrap;}
+.food-edit{outline:none;border-bottom:1.5px dashed transparent;cursor:text;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+.food-edit:focus{border-color:var(--muted);white-space:normal;}
+.food-add-btn{padding:6px 11px;border-radius:99px;border:1.5px solid var(--border);background:none;font-size:12px;font-weight:800;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap;}
+.food-del{background:none;border:none;color:#D1D5DB;cursor:pointer;font-size:12px;padding:2px;}
+.food-del:hover{color:#EF4444;}
 /* ── MOBILE ── */
 @media(max-width:640px){
   body{padding:0 0 4rem;}
@@ -481,11 +509,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .meal-target-grid{grid-template-columns:1fr;}
   .meal-summary{min-height:0;padding:1rem;}
   .meal-summary-val{font-size:24px;}
-  .meal-row{grid-template-columns:66px 1fr 62px;gap:8px;padding:10px;}
+  .meal-row{grid-template-columns:1fr;gap:8px;padding:10px;}
   .meal-label{font-size:12px;}
   .meal-note{font-size:10px;}
   .meal-menu{font-size:13px;}
-  .meal-kcal{font-size:14px;}
+  .meal-food-row{grid-template-columns:minmax(0,1fr) 70px 78px 20px;padding:6px;}
+  .meal-food-sel{font-size:11px;padding:5px 6px;}
+  .meal-qty-ctrl{font-size:11px;grid-template-columns:20px 1fr 20px;}
+  .meal-food-macro{font-size:10px;}
+  .meal-kcal{justify-self:stretch;text-align:left;font-size:14px;display:flex;gap:8px;align-items:baseline;}
   .modal,.dday-modal,.cal-modal{padding:1.1rem;}
 }
 
@@ -533,11 +565,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .portfolio-table th,.portfolio-table td{font-size:10px;padding:7px 3px;}
   .portfolio-table th:nth-child(2),.portfolio-table td:nth-child(2){display:none;}
   .rebalance-list{grid-template-columns:1fr;}
-  .meal-row{grid-template-columns:58px minmax(0,1fr) 68px;gap:7px;}
+  .meal-row{grid-template-columns:1fr;gap:7px;}
   .meal-menu{line-height:1.35;word-break:keep-all;}
-  .meal-protein{font-size:10px;}
   .meal-kcal{font-size:13px;white-space:nowrap;line-height:1.1;} .meal-kcal span{display:inline;margin-left:1px;font-size:10px;}
   .meal-total{font-size:12px;line-height:1.35;align-items:flex-start;}
+  .food-lib{padding:0.9rem;}
+  .food-table th,.food-table td{font-size:10.5px;padding:6px 3px;}
+  .food-table th:nth-child(2),.food-table td:nth-child(2){display:none;}
   .meal-total strong{text-align:right;}
 }
 </style>
@@ -660,6 +694,22 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div class="meal-day" id="meal-weekend">
         <div class="meal-list" id="meal-list-weekend"></div>
         <div class="meal-total"><span>주말 예상 총합</span><strong id="meal-total-weekend">0 kcal</strong></div>
+      </div>
+
+      <div class="food-lib">
+        <div class="food-lib-head">
+          <div>
+            <div class="food-lib-title">🥗 음식별 칼로리·단백질</div>
+            <div class="food-lib-sub">음식 기준값을 수정하면 식단 합계가 바로 다시 계산됩니다.</div>
+          </div>
+          <button class="food-add-btn" onclick="addMealFood()">+ 음식 추가</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="food-table">
+            <thead><tr><th>음식</th><th>단위</th><th>kcal</th><th>단백질</th><th></th></tr></thead>
+            <tbody id="meal-food-body"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -924,6 +974,22 @@ let mealPlan = {
     {label:'간식',note:'선택',menu:'그릭요거트 또는 단백질음료 100kcal'},
   ]
 };
+
+let mealFoods = [
+  {id:'protein_drink',name:'단백질음료',unit:'1개',kcal:100,protein:20},
+  {id:'boiled_egg',name:'삶은계란',unit:'1개',kcal:75,protein:6},
+  {id:'chicken_150',name:'닭가슴살 150g',unit:'1팩',kcal:165,protein:35},
+  {id:'salad_pack',name:'샐러드',unit:'1팩',kcal:80,protein:3},
+  {id:'tofu',name:'두부',unit:'1/2모',kcal:160,protein:16},
+  {id:'sweet_potato',name:'고구마',unit:'1개',kcal:170,protein:3},
+  {id:'company_meal',name:'회사밥 일반식',unit:'1식',kcal:620,protein:25},
+  {id:'brown_rice_half',name:'현미밥 반공기',unit:'1회',kcal:150,protein:3},
+  {id:'salmon',name:'연어',unit:'1회',kcal:240,protein:25},
+  {id:'greek_yogurt',name:'그릭요거트',unit:'1개',kcal:130,protein:12},
+  {id:'banana',name:'바나나',unit:'1개',kcal:100,protein:1},
+  {id:'tomato',name:'방울토마토',unit:'1회',kcal:40,protein:1},
+  {id:'americano',name:'아메리카노',unit:'1잔',kcal:10,protein:0},
+];
 
 let goalData = {};
 let selectedGoalDate = null;
@@ -1421,78 +1487,127 @@ setTimeout(()=>{const inp=document.getElementById('goal-add-inp');if(inp)inp.add
 // MEALS
 // ═══════════════════════════════════════
 
+function mealDayLabel(key){return key==='weekday'?'평일':'주말';}
+function foodById(id){return mealFoods.find(f=>f.id===id)||mealFoods[0];}
+function makeFoodId(){return 'food_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,6);}
+function mealItem(foodId,qty=1){return {foodId,qty};}
+function defaultMealItems(menu){
+  const t=String(menu||'');
+  const items=[];
+  const push=(id,qty=1)=>items.push(mealItem(id,qty));
+  const eggMatch=t.match(/(?:계란|달걀|삶은계란)\s*(\d+)개/);
+  const drinkMatch=t.match(/단백질음료|프로틴|쉐이크/);
+  if(drinkMatch)push('protein_drink',1);
+  if(eggMatch)push('boiled_egg',Number(eggMatch[1])||1); else if(/계란|달걀|삶은계란/.test(t))push('boiled_egg',1);
+  if(/회사밥|일반식|백반/.test(t))push('company_meal',1);
+  if(/닭가슴살/.test(t))push('chicken_150',1);
+  if(/샐러드/.test(t))push('salad_pack',1);
+  if(/두부/.test(t))push('tofu',1);
+  if(/고구마/.test(t))push('sweet_potato',1);
+  if(/현미밥|반공기/.test(t))push('brown_rice_half',1);
+  if(/연어/.test(t))push('salmon',1);
+  if(/그릭요거트|요거트/.test(t))push('greek_yogurt',1);
+  if(/바나나/.test(t))push('banana',1);
+  if(/방울토마토/.test(t))push('tomato',1);
+  if(/아메리카노|커피/.test(t))push('americano',1);
+  return items.length?items:[mealItem('protein_drink',1)];
+}
 function normalizeMealPlan(){
-  const oldWeekday=JSON.stringify(mealPlan.weekday||[]);
-  const oldWeekend=JSON.stringify(mealPlan.weekend||[]);
   let changed=false;
-  const weekdayLooksDefault=(oldWeekday.includes('단백질음료 1개')&&oldWeekday.includes('회사밥 일반식')&&oldWeekday.includes('닭가슴살 샐러드 현미밥'))
-    || (oldWeekday.includes('단백질음료 100kcal')&&oldWeekday.includes('회사밥 일반식 밥 반공기')&&oldWeekday.includes('아메리카노 또는 방울토마토'));
-  const weekendLooksDefault=(oldWeekend.includes('계란 2개 그릭요거트 바나나')&&oldWeekend.includes('현미밥 닭가슴살 샐러드'))
-    || (oldWeekend.includes('연어 또는 닭가슴살 샐러드 고구마')&&oldWeekend.includes('그릭요거트 또는 단백질음료 100kcal'));
-  if(weekdayLooksDefault){
-    mealPlan.weekday=[
-      {label:'아침',note:'출근 전 가볍게',menu:'단백질음료 100kcal 삶은계란 2개'},
-      {label:'점심',note:'회사밥은 양 조절',menu:'회사밥 일반식 밥 조금'},
-      {label:'저녁',note:'감량 메인 식단',menu:'닭가슴살 150g 두부 샐러드 고구마 1개'},
-      {label:'간식',note:'배고플 때만',menu:'단백질음료 100kcal'},
-    ];
-    changed=true;
-  }
-  if(weekendLooksDefault){
-    mealPlan.weekend=[
-      {label:'아침',note:'단백질 먼저',menu:'단백질음료 100kcal 삶은계란 2개'},
-      {label:'점심',note:'운동/활동 전후',menu:'닭가슴살 150g 샐러드 현미밥 반공기'},
-      {label:'저녁',note:'가볍게 마무리',menu:'연어 샐러드 고구마 1개'},
-      {label:'간식',note:'선택',menu:'그릭요거트 또는 단백질음료 100kcal'},
-    ];
-    changed=true;
-  }
+  const defaults={
+    weekday:[
+      {label:'아침',note:'출근 전 가볍게',menu:'단백질음료 100kcal 삶은계란 2개',items:[mealItem('protein_drink',1),mealItem('boiled_egg',2)]},
+      {label:'점심',note:'회사밥은 양 조절',menu:'회사밥 일반식 밥 조금',items:[mealItem('company_meal',1)]},
+      {label:'저녁',note:'감량 메인 식단',menu:'닭가슴살 150g 두부 샐러드 고구마 1개',items:[mealItem('chicken_150',1),mealItem('tofu',1),mealItem('salad_pack',1),mealItem('sweet_potato',1)]},
+      {label:'간식',note:'배고플 때만',menu:'단백질음료 100kcal',items:[mealItem('protein_drink',1)]},
+    ],
+    weekend:[
+      {label:'아침',note:'단백질 먼저',menu:'단백질음료 100kcal 삶은계란 2개',items:[mealItem('protein_drink',1),mealItem('boiled_egg',2)]},
+      {label:'점심',note:'운동/활동 전후',menu:'닭가슴살 150g 샐러드 현미밥 반공기',items:[mealItem('chicken_150',1),mealItem('salad_pack',1),mealItem('brown_rice_half',1)]},
+      {label:'저녁',note:'가볍게 마무리',menu:'연어 샐러드 고구마 1개',items:[mealItem('salmon',1),mealItem('salad_pack',1),mealItem('sweet_potato',1)]},
+      {label:'간식',note:'선택',menu:'그릭요거트 또는 단백질음료 100kcal',items:[mealItem('greek_yogurt',1)]},
+    ]
+  };
+  ['weekday','weekend'].forEach(key=>{
+    if(!Array.isArray(mealPlan[key])||!mealPlan[key].length){mealPlan[key]=defaults[key];changed=true;}
+    mealPlan[key].forEach(m=>{
+      if(!Array.isArray(m.items)||!m.items.length){m.items=defaultMealItems(m.menu);changed=true;}
+      m.items=m.items.map(it=>({foodId:it.foodId||it.id||'protein_drink',qty:Number(it.qty)||1}));
+    });
+  });
   return changed;
 }
-
-function estimateCalories(menu){
-  const text=String(menu||'').toLowerCase();
-  if(!text.trim())return 0;
-  const rules=[
-    [/회사밥|일반식|백반/,620],[/밥 반공기|반공기/,150],[/단백질음료|프로틴|쉐이크/,100],[/닭가슴살/,165],[/샐러드/,90],
-    [/현미밥|공기밥|쌀밥|잡곡밥/,300],[/고구마/,170],[/계란|달걀|삶은계란/,80],[/그릭요거트|요거트/,130],[/바나나/,100],
-    [/연어/,240],[/소고기|돼지고기|고기/,330],[/두부/,160],[/방울토마토/,40],[/아메리카노|커피/,10],
-    [/라면/,520],[/김밥/,450],[/샌드위치/,420],[/우유/,130],[/과자|빵/,300]
-  ];
-  let total=0;
-  rules.forEach(([re,k])=>{if(re.test(text))total+=k;});
-  return total||500;
+function calcMeal(m){
+  if(!Array.isArray(m.items)||!m.items.length)m.items=defaultMealItems(m.menu);
+  return m.items.reduce((sum,it)=>{
+    const f=foodById(it.foodId); const q=Number(it.qty)||0;
+    sum.kcal+=Math.round((Number(f.kcal)||0)*q);
+    sum.protein+=Math.round((Number(f.protein)||0)*q);
+    return sum;
+  },{kcal:0,protein:0});
 }
-function mealDayLabel(key){return key==='weekday'?'평일':'주말';}
-function estimateProtein(menu){
-  const text=String(menu||'').toLowerCase();
-  const rules=[[/단백질음료|프로틴|쉐이크/,20],[/닭가슴살/,35],[/계란|달걀|삶은계란/,6],[/연어/,25],[/그릭요거트|요거트/,12],[/두부/,16],[/회사밥|일반식|백반/,25]];
-  let total=0;rules.forEach(([re,g])=>{if(re.test(text))total+=g;});return total;
+function formatFoodQty(f,qty){
+  const unit=String(f.unit||'회');
+  if(unit.includes('/'))return qty+' x '+unit;
+  return qty+unit.replace(/^1/,'');
+}
+function mealSummary(m){
+  if(!Array.isArray(m.items)||!m.items.length)m.items=defaultMealItems(m.menu);
+  return m.items.map(it=>{const f=foodById(it.foodId);return f.name+' '+formatFoodQty(f,it.qty);}).join(', ');
+}
+function foodOptions(selected){
+  return mealFoods.map(f=>'<option value="'+f.id+'" '+(f.id===selected?'selected':'')+'>'+f.name+' · '+f.unit+' · '+f.kcal+'kcal/P'+f.protein+'g</option>').join('');
 }
 function renderMeals(){
+  normalizeMealPlan();
   ['weekday','weekend'].forEach(key=>{
     const list=document.getElementById('meal-list-'+key); if(!list)return;
     list.innerHTML='';
     let total=0, protein=0;
     mealPlan[key].forEach((m,i)=>{
-      const kcal=estimateCalories(m.menu); const p=estimateProtein(m.menu); total+=kcal; protein+=p;
+      const c=calcMeal(m); total+=c.kcal; protein+=c.protein;
       const row=document.createElement('div'); row.className='meal-row';
-      row.innerHTML='<div class="meal-time"><div class="meal-label">'+m.label+'</div><div class="meal-note">'+m.note+'</div></div>'+'<div><div class="meal-menu" contenteditable="true">'+m.menu+'</div><div class="meal-protein">단백질 약 '+p+'g</div></div>'+'<div class="meal-kcal">'+kcal+'<span>kcal</span></div>';
-      row.querySelector('.meal-menu').addEventListener('blur',e=>{
-        mealPlan[key][i].menu=e.target.textContent.trim();
-        renderMeals();scheduleSave();
-      });
-      row.querySelector('.meal-menu').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
+      row.innerHTML='<div class="meal-time"><div class="meal-label" contenteditable="true">'+m.label+'</div><div class="meal-note" contenteditable="true">'+m.note+'</div></div>'+
+        '<div><div class="meal-menu">'+mealSummary(m)+'</div><div class="meal-food-list">'+
+        m.items.map((it,ii)=>{const f=foodById(it.foodId);const q=Number(it.qty)||0;return '<div class="meal-food-row"><select class="meal-food-sel" data-i="'+i+'" data-ii="'+ii+'" onchange="setMealFood(\''+key+'\','+i+','+ii+',this.value)">'+foodOptions(it.foodId)+'</select><div class="meal-qty-ctrl"><button onclick="adjustMealQty(\''+key+'\','+i+','+ii+',-1)">-</button><span>'+q+'</span><button onclick="adjustMealQty(\''+key+'\','+i+','+ii+',1)">+</button></div><div class="meal-food-macro">'+Math.round(f.kcal*q)+'kcal<br>P '+Math.round(f.protein*q)+'g</div><button class="meal-food-del" onclick="delMealItem(\''+key+'\','+i+','+ii+')">✕</button></div>';}).join('')+
+        '</div><button class="meal-add-food" onclick="addMealItem(\''+key+'\','+i+')">+ 음식 추가</button></div>'+
+        '<div class="meal-kcal">'+c.kcal+'<span>kcal</span><div class="meal-protein-total">단백질 '+c.protein+'g</div></div>';
+      row.querySelector('.meal-label').addEventListener('blur',e=>{mealPlan[key][i].label=e.target.textContent.trim()||'식사';scheduleSave();});
+      row.querySelector('.meal-note').addEventListener('blur',e=>{mealPlan[key][i].note=e.target.textContent.trim();scheduleSave();});
+      row.querySelectorAll('[contenteditable="true"]').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}}));
+      row.querySelectorAll('.meal-food-sel').forEach(sel=>sel.addEventListener('change',e=>{const ii=+e.target.dataset.ii;mealPlan[key][i].items[ii].foodId=e.target.value;renderMeals();scheduleSave();}));
       list.appendChild(row);
     });
     const totalEl=document.getElementById('meal-total-'+key); if(totalEl)totalEl.textContent=total.toLocaleString('ko-KR')+' kcal · 단백질 '+protein+'g';
   });
+  renderMealFoodLibrary();
   const todayKey=(TODAY.getDay()===0||TODAY.getDay()===6)?'weekend':'weekday';
-  const todayTotal=(mealPlan[todayKey]||[]).reduce((sum,m)=>sum+estimateCalories(m.menu),0);
-  const todayProtein=(mealPlan[todayKey]||[]).reduce((sum,m)=>sum+estimateProtein(m.menu),0);
-  const total=document.getElementById('meal-today-total'); if(total)total.textContent=todayTotal.toLocaleString('ko-KR')+' kcal';
-  const sub=document.getElementById('meal-today-sub'); if(sub)sub.textContent='173cm · 81kg → 70kg 목표 / '+mealDayLabel(todayKey)+' 기준 단백질 약 '+todayProtein+'g';
+  const today=(mealPlan[todayKey]||[]).reduce((sum,m)=>{const c=calcMeal(m);sum.kcal+=c.kcal;sum.protein+=c.protein;return sum;},{kcal:0,protein:0});
+  const total=document.getElementById('meal-today-total'); if(total)total.textContent=today.kcal.toLocaleString('ko-KR')+' kcal';
+  const sub=document.getElementById('meal-today-sub'); if(sub)sub.textContent='173cm · 81kg → 70kg 목표 / '+mealDayLabel(todayKey)+' 기준 단백질 약 '+today.protein+'g';
 }
+function setMealFood(key,i,ii,value){mealPlan[key][i].items[ii].foodId=value;renderMeals();scheduleSave();}
+function setMealQty(key,i,ii,value){mealPlan[key][i].items[ii].qty=Math.max(0,parseFloat(value)||0);renderMeals();scheduleSave();}
+function adjustMealQty(key,i,ii,delta){const cur=Number(mealPlan[key][i].items[ii].qty)||0;mealPlan[key][i].items[ii].qty=Math.max(0,cur+delta);renderMeals();scheduleSave();}
+function addMealItem(key,i){mealPlan[key][i].items.push(mealItem(mealFoods[0].id,1));renderMeals();scheduleSave();}
+function delMealItem(key,i,ii){mealPlan[key][i].items.splice(ii,1);if(!mealPlan[key][i].items.length)mealPlan[key][i].items.push(mealItem(mealFoods[0].id,1));renderMeals();scheduleSave();}
+function renderMealFoodLibrary(){
+  const body=document.getElementById('meal-food-body'); if(!body)return;
+  body.innerHTML=mealFoods.map((f,i)=>'<tr><td><span class="food-edit" contenteditable="true" data-i="'+i+'" data-f="name">'+f.name+'</span></td><td><span class="food-edit" contenteditable="true" data-i="'+i+'" data-f="unit">'+f.unit+'</span></td><td><span class="food-edit" contenteditable="true" data-i="'+i+'" data-f="kcal">'+f.kcal+'</span></td><td><span class="food-edit" contenteditable="true" data-i="'+i+'" data-f="protein">'+f.protein+'g</span></td><td><button class="food-del" onclick="delMealFood('+i+')">✕</button></td></tr>').join('');
+  body.querySelectorAll('.food-edit').forEach(el=>{
+    el.addEventListener('focus',e=>{const f=mealFoods[+e.target.dataset.i],field=e.target.dataset.f;if(field==='kcal'||field==='protein')e.target.textContent=f[field]||0;});
+    el.addEventListener('blur',e=>{const f=mealFoods[+e.target.dataset.i],field=e.target.dataset.f;let v=e.target.textContent.trim();if(field==='kcal'||field==='protein')v=Math.max(0,parseFloat(v)||0);f[field]=v;renderMeals();scheduleSave();});
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
+  });
+}
+function addMealFood(){mealFoods.push({id:makeFoodId(),name:'새 음식',unit:'1회',kcal:0,protein:0});renderMeals();scheduleSave();}
+function delMealFood(i){
+  const id=mealFoods[i]?.id;if(!id||mealFoods.length<=1)return;
+  mealFoods.splice(i,1);
+  ['weekday','weekend'].forEach(key=>(mealPlan[key]||[]).forEach(m=>(m.items||[]).forEach(it=>{if(it.foodId===id)it.foodId=mealFoods[0].id;})));
+  renderMeals();scheduleSave();
+}
+
 function switchMealDay(key,btn){
   document.querySelectorAll('#cat-meals .meal-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
@@ -2133,7 +2248,7 @@ function showSaveStatus(s){
 
 function collectState(){
   return {
-    sched, cats, ddayList, accounts, monthlyTrack, goalData, mealPlan, portfolio, investmentPlan, dashboardTitle,
+    sched, cats, ddayList, accounts, monthlyTrack, goalData, mealPlan, mealFoods, portfolio, investmentPlan, dashboardTitle,
     goalTargetVal:document.getElementById('goal-target')?.value||'',
     goalYearVal:document.getElementById('goal-year')?.value||'',
     goalMonthVal:document.getElementById('goal-month')?.value||'',
@@ -2150,6 +2265,7 @@ function applyState(st){
   if(st.monthlyTrack) Object.assign(monthlyTrack,st.monthlyTrack);
   if(st.goalData)     Object.assign(goalData,st.goalData);
   if(st.mealPlan)     Object.assign(mealPlan,st.mealPlan);
+  if(st.mealFoods)    {mealFoods.length=0;mealFoods.push(...st.mealFoods);}
   if(st.portfolio)    {portfolio.length=0;portfolio.push(...st.portfolio);}
   if(st.investmentPlan) Object.assign(investmentPlan,st.investmentPlan);
   if(st.dashboardTitle){dashboardTitle=st.dashboardTitle;const titleEl=document.getElementById('app-title');if(titleEl)titleEl.textContent=dashboardTitle;document.title=dashboardTitle.replace(/^\S+\s*/,'')||dashboardTitle;}
