@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -898,14 +898,14 @@ function makeBlock(b,idx,dk){
     const sv=parseTime(startEl.textContent),ev=parseTime(endEl.textContent);
     if(sv!==null&&ev!==null&&ev>sv){const m=ev-sv;durEl.textContent=fmtDur(m);b.start=startEl.textContent.trim();b.end=endEl.textContent.trim();if(b.catId!=='rest')badge.textContent=fmtH(m);}
     else if(cascade&&sv!==null){const dur=blkMins(b)||60;const ne=minsToStr(sv+dur);endEl.textContent=ne;b.start=startEl.textContent.trim();b.end=ne;durEl.textContent=fmtDur(dur);}
-    updateSum(dk);renderCalendar();
+    updateSum(dk);renderCalendar();scheduleSave();
   }
   startEl.addEventListener('blur',()=>recalc(true));
   endEl.addEventListener('blur',()=>recalc(false));
   [startEl,endEl].forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();el.blur();}}));
-  div.querySelector('.block-title').addEventListener('blur',e=>{b.title=e.target.textContent;});
-  div.querySelector('.block-desc').addEventListener('blur',e=>{b.desc=e.target.textContent;});
-  div.querySelector('.del-btn').addEventListener('click',()=>{sched[dk].splice(idx,1);renderDay(dk);renderCalendar();});
+  div.querySelector('.block-title').addEventListener('blur',e=>{b.title=e.target.textContent;scheduleSave();});
+  div.querySelector('.block-desc').addEventListener('blur',e=>{b.desc=e.target.textContent;scheduleSave();});
+  div.querySelector('.del-btn').addEventListener('click',()=>{sched[dk].splice(idx,1);renderDay(dk);renderCalendar();scheduleSave();});
   div.querySelector('.tag').addEventListener('click',e=>{e.stopPropagation();openCatPicker(div.querySelector('.tag'),idx,dk);});
   return div;
 }
@@ -1324,10 +1324,10 @@ function renderAccounts(){
         ${a.isSecurities?`<button class="acct-holdings-toggle" onclick="toggleHoldings(${i})">${openHoldingsIdx===i?'▲':'📊 종목'}</button>`:''}
         <span class="acct-amt ${type==='debt'?'is-debt':''}" contenteditable="${!a.isSecurities}" ${a.isSecurities?'style="cursor:default;color:var(--muted)"':''}>${fmtWon(a.amt)}</span>
         <button class="acct-del" onclick="delAcct(${i})">✕</button>`;
-      row.querySelector('.acct-name').addEventListener('blur',e=>{accounts[i].name=e.target.textContent;});
+      row.querySelector('.acct-name').addEventListener('blur',e=>{accounts[i].name=e.target.textContent;scheduleSave();});
       if(!a.isSecurities){
         row.querySelector('.acct-amt').addEventListener('focus',e=>{e.target.textContent=accounts[i].amt||'';});
-        row.querySelector('.acct-amt').addEventListener('blur',e=>{accounts[i].amt=parseWon(e.target.textContent);renderBudget();});
+        row.querySelector('.acct-amt').addEventListener('blur',e=>{accounts[i].amt=parseWon(e.target.textContent);renderBudget();scheduleSave();});
         row.querySelector('.acct-amt').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
       }
       list.appendChild(row);
@@ -1355,21 +1355,21 @@ function makeHoldingsPanel(a,i){
         <span class="holdings-name" contenteditable="true">${h.name}</span>
         <span class="holdings-val" contenteditable="true">${fmtWon(h.qty*h.price)}</span>
         <button class="holdings-del">✕</button>`;
-      row.querySelector('.holdings-name').addEventListener('blur',e=>{h.name=e.target.textContent.trim()||'종목명';});
+      row.querySelector('.holdings-name').addEventListener('blur',e=>{h.name=e.target.textContent.trim()||'종목명';scheduleSave();});
       const valEl=row.querySelector('.holdings-val');
       valEl.addEventListener('focus',e=>{e.target.textContent=h.qty*h.price||'';});
       valEl.addEventListener('blur',e=>{
         const v=parseWon(e.target.textContent);
         h.qty=1;h.price=v; // 단순 평가금액으로 저장
         e.target.textContent=fmtWon(v);
-        renderBudget();rebuildPanel();
+        renderBudget();rebuildPanel();scheduleSave();
       });
       valEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}});
-      row.querySelector('.holdings-del').addEventListener('click',()=>{a.holdings.splice(hi,1);renderBudget();rebuildPanel();});
+      row.querySelector('.holdings-del').addEventListener('click',()=>{a.holdings.splice(hi,1);renderBudget();rebuildPanel();scheduleSave();});
       panel.appendChild(row);
     });
     const addBtn=document.createElement('button');addBtn.className='holdings-add-btn';addBtn.textContent='+ 종목 추가';
-    addBtn.onclick=()=>{a.holdings.push({name:'새 종목',qty:1,price:0});renderBudget();rebuildPanel();};
+    addBtn.onclick=()=>{a.holdings.push({name:'새 종목',qty:1,price:0});renderBudget();rebuildPanel();scheduleSave();};
     panel.appendChild(addBtn);
     const totalRow=document.createElement('div');totalRow.className='holdings-total-row';
     totalRow.innerHTML=`<span>종목 합계</span><span>${fmtWon(calcHoldingsTotal(a))}</span>`;
@@ -1431,7 +1431,7 @@ function bindTrackInput(id,field){
     t.netWorth=calcNetWorth();
 
     document.getElementById('mt-net').textContent=fmtWon(t.income-t.save-t.spend);
-    renderBudget();
+    renderBudget();scheduleSave();
   });
   el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();el.blur();}});
 }
@@ -1440,7 +1440,7 @@ function resetSaveAuto(){
   const t=getTrack(trackYear,trackMonth);
   t.saveManual=false;
   t.save=Math.max(0,t.income-t.spend);
-  renderMonthTracker();renderBudget();
+  renderMonthTracker();renderBudget();scheduleSave();
 }
 
 // ── 히스토리 테이블 ──
@@ -1693,6 +1693,7 @@ function renderChartActual(){
 const SB_URL = 'https://hfownymjkdiggmhzpksj.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhmb3dueW1qa2RpZ2dtaHpwa3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MDk5OTksImV4cCI6MjA5ODM4NTk5OX0.xTIzf7v1kwVGtnw1YlYgw2Np-MFpq45bZAeU6bA0Ims';
 const SB_H = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+const SB_ROW_ID = 'main';
 
 let _saveTimer = null;
 let _saving = false;
@@ -1737,33 +1738,24 @@ function applyState(st){
 
 async function sbSave(){
   if(!_ready||_saving)return;
-  _saving=true; showSaveStatus('saving');
+  _saving=true;
+  showSaveStatus('saving');
   try{
-    const body=JSON.stringify({data:collectState(),updated_at:new Date().toISOString()});
-    // PATCH 먼저 시도
-    let r=await fetch(SB_URL+'/rest/v1/dashboard_data?id=eq.sister',{
-      method:'PATCH',
-      headers:{...SB_H,'Prefer':'return=minimal'},
-      body
+    const payload={id:SB_ROW_ID,data:collectState(),updated_at:new Date().toISOString()};
+    const r=await fetch(SB_URL+'/rest/v1/dashboard_data?on_conflict=id',{
+      method:'POST',
+      headers:{...SB_H,'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify(payload)
     });
-    // 204나 200이면 성공, 0개 업데이트(행 없음)면 POST로 insert
-    if(r.status===404||r.status===200){
-      // row 없을 때 insert
-      r=await fetch(SB_URL+'/rest/v1/dashboard_data',{
-        method:'POST',
-        headers:{...SB_H,'Prefer':'return=minimal'},
-        body:JSON.stringify({id:'main',data:collectState(),updated_at:new Date().toISOString()})
-      });
-    }
-    if(!r.ok&&r.status!==204&&r.status!==201){
-      const t=await r.text();throw new Error(r.status+' '+t);
+    if(!r.ok){
+      const t=await r.text();
+      throw new Error(r.status+' '+t);
     }
     showSaveStatus('saved');
     setTimeout(()=>showSaveStatus('idle'),2000);
   }catch(e){
     console.error('Save error',e);
     showSaveStatus('error');
-    // 3초 후 재시도
     setTimeout(()=>{_saving=false;sbSave();},3000);
     return;
   }
@@ -1772,17 +1764,22 @@ async function sbSave(){
 
 async function sbLoad(){
   try{
-    const r=await fetch(SB_URL+'/rest/v1/dashboard_data?id=eq.sister&select=data',{headers:SB_H});
-    if(!r.ok)throw new Error(r.status);
+    const r=await fetch(SB_URL+'/rest/v1/dashboard_data?id=eq.'+encodeURIComponent(SB_ROW_ID)+'&select=data',{headers:SB_H});
+    if(!r.ok)throw new Error(r.status+' '+await r.text());
     const rows=await r.json();
     if(rows&&rows[0]&&rows[0].data&&Object.keys(rows[0].data).length){
-      applyState(rows[0].data); return true;
+      applyState(rows[0].data);
+      return true;
     }
     return false;
-  }catch(e){console.error('Load error',e);return false;}
+  }catch(e){
+    console.error('Load error',e);
+    showSaveStatus('error');
+    return false;
+  }
 }
 
-// 변경 있을 때 명시적으로 호출 — 함수 래핑 없음
+// 변경 있을 때 명시적으로 호출
 function scheduleSave(){
   if(!_ready)return;
   clearTimeout(_saveTimer);
