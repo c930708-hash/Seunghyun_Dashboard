@@ -764,6 +764,43 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .cal-tot{font-size:9px;margin-top:4px;}
 }
 
+
+/* clearer rebalance memo cards */
+.rebalance-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px;}
+.rebalance-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:11px;display:flex;flex-direction:column;gap:9px;}
+.rebalance-item.status-high{border-color:#FECACA;background:#FFFBFB;}
+.rebalance-item.status-low{border-color:#BFDBFE;background:#F8FBFF;}
+.rebalance-item.status-ok{border-color:#BBF7D0;background:#F7FEF9;}
+.rebalance-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.rebalance-name{font-size:13px;font-weight:900;line-height:1.35;word-break:keep-all;}
+.rebalance-badge{border-radius:999px;padding:3px 8px;font-size:10.5px;font-weight:900;white-space:nowrap;line-height:1.25;}
+.status-high .rebalance-badge{background:#FEE2E2;color:#B91C1C;}
+.status-low .rebalance-badge{background:#DBEAFE;color:#1D4ED8;}
+.status-ok .rebalance-badge{background:#DCFCE7;color:#047857;}
+.rebalance-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;}
+.rebalance-metric{background:rgba(255,255,255,.75);border:1px solid var(--border);border-radius:9px;padding:7px;min-width:0;}
+.rebalance-metric span{display:block;font-size:10px;font-weight:900;color:var(--muted);margin-bottom:2px;white-space:nowrap;}
+.rebalance-metric strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:900;line-height:1.2;white-space:nowrap;}
+.rebalance-diff.high{color:#DC2626;}
+.rebalance-diff.low{color:#2563EB;}
+.rebalance-diff.ok{color:#059669;}
+.rebalance-bars{display:flex;flex-direction:column;gap:5px;}
+.rebalance-bar-row{display:grid;grid-template-columns:32px minmax(0,1fr) 42px;gap:6px;align-items:center;font-size:10.5px;color:var(--muted);font-weight:900;}
+.rebalance-track{height:7px;border-radius:999px;background:#E5E7EB;overflow:hidden;}
+.rebalance-track i{display:block;height:100%;border-radius:999px;background:#9CA3AF;}
+.rebalance-bar-row.current .rebalance-track i{background:#2563EB;}
+.status-high .rebalance-bar-row.current .rebalance-track i{background:#DC2626;}
+.status-low .rebalance-bar-row.current .rebalance-track i{background:#2563EB;}
+.status-ok .rebalance-bar-row.current .rebalance-track i{background:#059669;}
+.rebalance-bar-row strong{font-family:'Space Grotesk',sans-serif;font-size:10.5px;text-align:right;color:var(--text);white-space:nowrap;}
+.rebalance-note{font-size:11px;color:var(--muted);line-height:1.45;word-break:keep-all;margin:0;}
+@media(max-width:640px){
+  .rebalance-list{grid-template-columns:1fr;gap:8px;}
+  .rebalance-item{padding:10px;}
+  .rebalance-metric{padding:6px;}
+  .rebalance-metric strong{font-size:12px;}
+}
+
 </style>
 </head>
 <body>
@@ -2434,12 +2471,38 @@ function renderPortfolioVisual(total){
 }
 function renderRebalanceList(total){
   const list=document.getElementById('rebalance-list'); if(!list)return;
-  if(!portfolio.length){list.innerHTML='<div class="rebalance-item"><div class="rebalance-name">종목 없음</div><div class="rebalance-note">종목을 추가하면 목표 비중과 현재 비중 차이를 보여줍니다.</div></div>';return;}
+  const fmtPct=v=>(Math.round((Number(v)||0)*10)/10).toLocaleString('ko-KR')+'%';
+  const fmtDiff=v=>(v>0?'+':'')+(Math.round((Number(v)||0)*10)/10).toLocaleString('ko-KR')+'%p';
+  const barWidth=v=>Math.max(0,Math.min(100,Number(v)||0));
+  if(!portfolio.length){
+    list.innerHTML='<div class="rebalance-item status-ok"><div class="rebalance-top"><div class="rebalance-name">종목 없음</div><span class="rebalance-badge">대기</span></div><div class="rebalance-note">종목을 추가하면 목표 비중과 현재 비중 차이를 카드로 보여줍니다.</div></div>';
+    return;
+  }
   list.innerHTML=portfolio.map(p=>{
-    const current=total?Math.round((Number(p.value)||0)/total*1000)/10:0,target=Number(p.targetPct)||0,diff=Math.round((current-target)*10)/10;
-    const action=Math.abs(diff)<3?'유지':diff>0?'비중 높음':'비중 낮음';
-    const note=Math.abs(diff)<3?'목표와 거의 맞아요.':diff>0?'다음 리밸런싱 때 일부 매도/추가매수 보류 후보예요.':'다음 리밸런싱 때 추가매수 후보예요.';
-    return '<div class="rebalance-item"><div class="rebalance-name">'+p.name+' · '+action+' '+diff+'%p</div><div class="rebalance-note">'+note+'</div></div>';
+    const current=total?Math.round((Number(p.value)||0)/total*1000)/10:0;
+    const target=Math.round((Number(p.targetPct)||0)*10)/10;
+    const diff=Math.round((current-target)*10)/10;
+    const status=Math.abs(diff)<3?'ok':diff>0?'high':'low';
+    const badge=status==='ok'?'균형':status==='high'?'비중 높음':'비중 낮음';
+    const diffClass=status==='high'?'high':status==='low'?'low':'ok';
+    const note=status==='ok'
+      ? '목표 범위 안이에요. 이번 리밸런싱에서는 유지 후보입니다.'
+      : status==='high'
+        ? '목표보다 '+Math.abs(diff).toLocaleString('ko-KR')+'%p 높아요. 다음 점검 때 일부 매도 또는 추가매수 보류 후보입니다.'
+        : '목표보다 '+Math.abs(diff).toLocaleString('ko-KR')+'%p 낮아요. 다음 점검 때 추가매수 후보입니다.';
+    return '<div class="rebalance-item status-'+status+'">'
+      +'<div class="rebalance-top"><div class="rebalance-name">'+escapeHtml(p.name||'종목')+'</div><span class="rebalance-badge">'+badge+'</span></div>'
+      +'<div class="rebalance-metrics">'
+        +'<div class="rebalance-metric"><span>목표</span><strong>'+fmtPct(target)+'</strong></div>'
+        +'<div class="rebalance-metric"><span>현재</span><strong>'+fmtPct(current)+'</strong></div>'
+        +'<div class="rebalance-metric"><span>차이</span><strong class="rebalance-diff '+diffClass+'">'+fmtDiff(diff)+'</strong></div>'
+      +'</div>'
+      +'<div class="rebalance-bars">'
+        +'<div class="rebalance-bar-row"><span>목표</span><div class="rebalance-track"><i style="width:'+barWidth(target)+'%"></i></div><strong>'+fmtPct(target)+'</strong></div>'
+        +'<div class="rebalance-bar-row current"><span>현재</span><div class="rebalance-track"><i style="width:'+barWidth(current)+'%"></i></div><strong>'+fmtPct(current)+'</strong></div>'
+      +'</div>'
+      +'<div class="rebalance-note">'+note+'</div>'
+    +'</div>';
   }).join('');
 }
 function nextRebalanceText(){
