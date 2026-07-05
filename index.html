@@ -339,7 +339,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 .hidden-col{opacity:0;position:absolute;width:0;height:0;}
 
-.debt-auto-panel{margin:3px 0 8px 20px;background:#FFF7F7;border:1.5px solid #FECACA;border-radius:10px;padding:9px 11px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;}
+.debt-auto-panel{margin:3px 0 8px 20px;background:#FFF7F7;border:1.5px solid #FECACA;border-radius:10px;padding:9px 11px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;position:relative;}
 .debt-auto-title{font-size:11px;font-weight:800;color:#991B1B;}
 .debt-auto-sub{font-size:10px;color:#B91C1C;margin-top:2px;line-height:1.3;}
 .debt-auto-field{display:flex;align-items:center;gap:6px;font-size:12px;color:#7F1D1D;white-space:nowrap;}
@@ -347,6 +347,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .debt-auto-edit:focus{border-color:#DC2626;}
 .debt-auto-day{width:34px;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:800;outline:none;border-bottom:1.5px dashed transparent;color:#DC2626;cursor:text;}
 .debt-auto-day:focus{border-color:#DC2626;}
+.debt-auto-close{position:absolute;right:7px;top:6px;border:none;background:none;color:#FCA5A5;font-size:13px;cursor:pointer;font-family:inherit;padding:2px 4px;}
+.debt-auto-close:hover{color:#DC2626;}
 .meal-target-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .meal-target-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:1rem;}
 .meal-target-label{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:5px;}
@@ -1747,37 +1749,61 @@ function deleteDdayFromModal(){
 // ═══════════════════════════════════════
 
 function debtMonthKey(d=TODAY){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
-function prevDebtMonthKey(d=TODAY){const p=new Date(d.getFullYear(),d.getMonth()-1,1);return debtMonthKey(p);}
-function ensureDebtAuto(a){
+function selectedDebtMonthKey(){return trackKey(trackYear,trackMonth);}
+function debtKeyParts(k){const [y,m]=String(k||debtMonthKey()).split('-').map(Number);return {y:y||TODAY.getFullYear(),m:m||TODAY.getMonth()+1};}
+function addDebtMonths(k,delta){const p=debtKeyParts(k);const d=new Date(p.y,p.m-1+delta,1);return debtMonthKey(d);}
+function prevDebtMonthKey(k=debtMonthKey()){return addDebtMonths(k,-1);}
+function cmpDebtMonthKey(a,b){const pa=debtKeyParts(a),pb=debtKeyParts(b);return (pa.y*12+pa.m)-(pb.y*12+pb.m);}
+function ensureDebtAuto(a,targetKey=selectedDebtMonthKey()){
   if(a.type!=='debt')return false;
   let changed=false;
   if(a.autoPayAmount==null){a.autoPayAmount=/오토|할부/.test(a.name)?411078:0;changed=true;}
   if(a.autoPayDay==null){a.autoPayDay=1;changed=true;}
-  if(a.autoPayAmount>0&&!a.autoPayLast&&/오토|할부/.test(a.name)){a.autoPayLast=prevDebtMonthKey();changed=true;}
-  if(a.autoPayAmount>0&&a.autoPayVersion!==2){if(/오토|할부/.test(a.name)&&a.autoPayLast===debtMonthKey())a.autoPayLast=prevDebtMonthKey();a.autoPayVersion=2;changed=true;}
+  if(a.autoPayAmount>0&&!a.autoPayLast&&/오토|할부/.test(a.name)){a.autoPayLast=prevDebtMonthKey(targetKey);changed=true;}
+  if(a.autoPayAmount>0&&a.autoPayVersion!==3){
+    if(/오토|할부/.test(a.name)&&(!a.autoPayLast||cmpDebtMonthKey(a.autoPayLast,targetKey)>0))a.autoPayLast=prevDebtMonthKey(targetKey);
+    a.autoPayVersion=3;changed=true;
+  }
   return changed;
 }
-function applyDebtAutoPayments(){
-  const mk=debtMonthKey();let changed=false;
+function applyDebtAutoPayments(targetKey=selectedDebtMonthKey()){
+  let changed=false;
   accounts.forEach(a=>{
     if(a.type!=='debt')return;
-    if(ensureDebtAuto(a))changed=true;
+    if(ensureDebtAuto(a,targetKey))changed=true;
     const amount=Number(a.autoPayAmount)||0;
-    if(amount>0&&a.autoPayLast!==mk&&a.amt>0){
-      a.amt=Math.max(0,a.amt-amount);a.autoPayLast=mk;a.autoPayAppliedAt=new Date().toISOString();changed=true;
+    if(amount<=0||a.amt<=0)return;
+    let last=a.autoPayLast||prevDebtMonthKey(targetKey);
+    if(cmpDebtMonthKey(last,targetKey)>=0){a.autoPayLast=last;return;}
+    let applied=0;
+    while(cmpDebtMonthKey(last,targetKey)<0&&a.amt>0&&applied<240){
+      last=addDebtMonths(last,1);
+      a.amt=Math.max(0,a.amt-amount);
+      applied++;
     }
+    a.autoPayLast=last;
+    a.autoPayAppliedAt=new Date().toISOString();
+    changed=true;
   });
   return changed;
 }
 function makeDebtAutoPanel(a,i){
-  ensureDebtAuto(a);
-  const mk=debtMonthKey();
+  const targetKey=selectedDebtMonthKey();
+  ensureDebtAuto(a,targetKey);
   const panel=document.createElement('div');panel.className='debt-auto-panel';
-  const status=(Number(a.autoPayAmount)||0)>0?(a.autoPayLast===mk?'이번 달 자동차감 완료':'다음 달 자동차감 예정'):'자동차감 꺼짐';
-  panel.innerHTML='<div><div class="debt-auto-title">자동차감 설정</div><div class="debt-auto-sub">'+status+'</div></div>'+
+  const amount=Number(a.autoPayAmount)||0;
+  const done=amount>0&&a.autoPayLast&&cmpDebtMonthKey(a.autoPayLast,targetKey)>=0;
+  const status=amount>0?(done?'선택 월까지 반영 완료':'월을 넘기면 자동 차감'):'차감액 입력 시 켜짐';
+  panel.innerHTML='<button class="debt-auto-close" onclick="toggleDebtOptions('+i+')">✕</button><div><div class="debt-auto-title">자동차감 설정</div><div class="debt-auto-sub">'+status+'</div></div>'+
     '<div class="debt-auto-field"><span>차감액</span><span class="debt-auto-edit" contenteditable="true">'+fmtWon(a.autoPayAmount||0)+'</span></div>';
   panel.querySelector('.debt-auto-edit').addEventListener('focus',e=>{e.target.textContent=a.autoPayAmount||'';});
-  panel.querySelector('.debt-auto-edit').addEventListener('blur',e=>{a.autoPayAmount=parseWon(e.target.textContent);renderBudget();scheduleSave();});
+  panel.querySelector('.debt-auto-edit').addEventListener('blur',e=>{
+    a.autoPayAmount=parseWon(e.target.textContent);
+    if(a.autoPayAmount>0&&!a.autoPayLast)a.autoPayLast=prevDebtMonthKey(selectedDebtMonthKey());
+    applyDebtAutoPayments(selectedDebtMonthKey());
+    openDebtOptionsIdx=null;
+    renderBudget();scheduleSave();
+  });
   panel.querySelectorAll('[contenteditable="true"]').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur();}}));
   return panel;
 }
@@ -1860,7 +1886,7 @@ function renderAccounts(){
 
 function toggleHoldings(i){openHoldingsIdx=openHoldingsIdx===i?null:i;renderAccounts();}
 function toggleAcctOptions(i){openAcctOptionsIdx=openAcctOptionsIdx===i?null:i;renderAccounts();}
-function toggleDebtOptions(i){openDebtOptionsIdx=openDebtOptionsIdx===i?null:i;renderAccounts();}
+function toggleDebtOptions(i){openDebtOptionsIdx=openDebtOptionsIdx===i?null:i;openAcctOptionsIdx=null;renderAccounts();}
 function makeAcctOptionsPanel(a,i){
   const panel=document.createElement('div');panel.className='acct-type-panel';
   const isDebt=a.type==='debt';
@@ -2000,7 +2026,9 @@ function changeTrackMonth(d){
   trackMonth+=d;
   if(trackMonth>11){trackMonth=0;trackYear++;}
   if(trackMonth<0){trackMonth=11;trackYear--;}
-  renderMonthTracker();
+  const changed=applyDebtAutoPayments(selectedDebtMonthKey());
+  renderBudget();
+  if(changed)scheduleSave();
 }
 function renderMonthTracker(){
   document.getElementById('mt-month-label').textContent=trackYear+'.'+String(trackMonth+1).padStart(2,'0');
