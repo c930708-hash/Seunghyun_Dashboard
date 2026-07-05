@@ -719,6 +719,51 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   .invest-analysis-val{font-size:14.5px;}
 }
 
+
+/* compact study and calendar pass */
+#cat-study .study-overview{display:none;}
+#cat-study .study-shell{gap:10px;}
+#cat-study .study-panel{padding:1rem;border-radius:12px;}
+#cat-study .study-panel-head{display:block;margin-bottom:10px;}
+#cat-study .study-panel-title{font-size:18px;font-weight:900;}
+#cat-study .study-panel-sub{font-size:12px;margin-top:3px;line-height:1.35;}
+#cat-study .study-panel .summary-bar{justify-content:flex-start;max-width:none;margin:9px 0 0;gap:8px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;}
+#cat-study .summary-bar .sum-item{font-size:13px;white-space:nowrap;flex-shrink:0;}
+#cat-study .summary-bar .total-pill{margin-left:0;font-size:13px;padding:5px 12px;flex-shrink:0;}
+#cat-study .study-timeline{gap:7px;}
+#cat-study .study-timeline .block{grid-template-columns:82px minmax(0,1fr) 52px!important;gap:10px;padding:10px 10px 10px 20px;border-radius:10px;border-left-width:4px!important;}
+#cat-study .study-timeline .time-col{background:transparent;padding:0;border-radius:0;align-items:flex-start;width:auto;}
+#cat-study .study-timeline .time-inputs{display:flex;flex-wrap:nowrap;white-space:nowrap;justify-content:flex-start;gap:2px;}
+#cat-study .study-timeline .time-part{width:43px;min-width:43px;font-size:13px;text-align:left;white-space:nowrap;}
+#cat-study .study-timeline .time-sep{flex:0 0 auto;}
+#cat-study .study-timeline .duration{font-size:10.5px;font-weight:900;}
+#cat-study .study-timeline .tag{font-size:10px;padding:2px 7px;margin-bottom:0;}
+#cat-study .study-timeline .block-title{font-size:14px;line-height:1.35;}
+#cat-study .study-timeline .block-desc{font-size:11.5px;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;}
+#cat-study .block-goal-badges{display:none;}
+#cat-study .study-timeline .right-col{align-items:flex-end;gap:5px;}
+#cat-study .study-timeline .hours-badge{font-size:11px;padding:3px 7px;}
+#cat-study .study-timeline .del-btn{font-size:14px;}
+#cat-study .study-panel .note{display:none;}
+.cal-cell{min-height:58px;padding:5px;}
+.cal-pills{display:flex!important;flex-direction:row;gap:3px;margin-top:8px;min-height:7px;}
+.cal-pill{display:block!important;width:7px;height:7px;border-radius:999px;padding:0;font-size:0;line-height:0;flex:0 0 auto;}
+.cal-tot{font-size:10px;margin-top:6px;white-space:nowrap;}
+@media(max-width:640px){
+  #cat-study .study-panel{padding:0.9rem;}
+  #cat-study .study-panel-title{font-size:17px;}
+  #cat-study .study-timeline .block{grid-template-columns:78px minmax(0,1fr) 46px!important;gap:8px;padding:9px 8px 9px 18px;}
+  #cat-study .study-timeline .time-part{width:42px;min-width:42px;font-size:12px;}
+  #cat-study .study-timeline .block-title{font-size:13.5px;}
+  #cat-study .study-timeline .block-desc{font-size:11px;}
+  #cat-study .study-timeline .hours-badge{font-size:10.5px;padding:3px 6px;}
+  .cal-cell{min-height:46px;padding:4px;}
+  .cal-date{font-size:11px;margin-bottom:0;}
+  .cal-pills{gap:2px;margin-top:5px;min-height:6px;}
+  .cal-pill{width:6px;height:6px;}
+  .cal-tot{font-size:9px;margin-top:4px;}
+}
+
 </style>
 </head>
 <body>
@@ -1632,7 +1677,19 @@ function renderCalendar(){
       const sc=(dow===0||dow===6)?sched.weekend:sched.weekday;
       const pills=document.createElement('div');pills.className='cal-pills';
       let tm=0;
-      sc.forEach(b=>{const cat=getCat(b.catId);const m=blkMins(b);if(b.catId!=='rest')tm+=m;const p=document.createElement('div');p.className='cal-pill';p.style.background=lighten(cat.color);p.style.color=cat.color;p.textContent=b.title;pills.appendChild(p);});
+      const seenCats=new Set();
+      sc.forEach(b=>{
+        const cat=getCat(b.catId),m=blkMins(b);
+        if(b.catId==='rest')return;
+        tm+=m;
+        if(seenCats.has(b.catId)||seenCats.size>=4)return;
+        seenCats.add(b.catId);
+        const p=document.createElement('div');
+        p.className='cal-pill';
+        p.style.background=cat.color;
+        p.title=cat.label+' · '+fmtH(m);
+        pills.appendChild(p);
+      });
       cell.appendChild(pills);
       if(tm>0){const t=document.createElement('div');t.className='cal-tot';t.textContent='⏱ '+fmtH(tm);cell.appendChild(t);}
       cell.onclick=()=>openCalModal(yr,mon,date,dow);
