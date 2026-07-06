@@ -818,6 +818,16 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .today-task-time{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:900;color:#2563EB;white-space:nowrap;}
 .today-task-title{font-size:13px;font-weight:900;line-height:1.35;word-break:keep-all;}
 .today-task-desc{font-size:11px;color:var(--muted);line-height:1.4;margin-top:2px;word-break:keep-all;}
+/* adaptive study carryover */
+.today-task.carryover{border-color:#FBBF24;background:#FFFBEB;}
+.today-task.done-empty{grid-template-columns:1fr;border-color:#BBF7D0;background:#F7FEF9;}
+.today-task-time small{display:block;margin-top:3px;font-family:inherit;font-size:10px;font-weight:900;color:#94A3B8;}
+.today-task-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
+.today-task-chip{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900;background:#E2E8F0;color:#475569;line-height:1.2;}
+.today-task-chip.warn{background:#FEF3C7;color:#B45309;}
+.today-task-chip.ok{background:#DCFCE7;color:#047857;}
+.study-delay-note{font-size:10.5px;font-weight:900;color:#B45309;margin-top:4px;line-height:1.35;word-break:keep-all;}
+
 .phase-rail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:10px;}
 .phase-chip{border:1.5px solid var(--border);border-radius:12px;padding:9px;background:#F8FAFC;min-width:0;}
 .phase-chip.active{border-color:#2563EB;background:#EFF6FF;}
@@ -1618,10 +1628,60 @@ function buildElectricianGoals(){
   const start=studyDate(ELECTRICIAN_PLAN_START), end=studyDate('2026-08-21');
   for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
     const key=dateKey(d);
-    out[key]=getStudyPlanText(new Date(d)).map((t,i)=>({text:t.title,catId:i===0?'theory':i===1?'practice':'review',done:false}));
+    out[key]=getStudyPlanText(new Date(d)).map((t,i)=>({text:t.title,catId:i===0?'theory':i===1?'practice':'review',done:false,time:t.time,desc:t.desc,plannedDate:key,sequence:i}));
   }
   return out;
 }
+function getStudyGoalBase(key,idx){
+  const plans=getStudyPlanText(studyDate(key));
+  return plans[idx]||{};
+}
+function syncElectricianGoalMetadata(){
+  const generated=buildElectricianGoals();
+  let changed=false;
+  Object.entries(generated).forEach(([key,items])=>{
+    if(!goalData[key]){goalData[key]=items;changed=true;return;}
+    items.forEach((base,i)=>{
+      if(!goalData[key][i]){goalData[key].push(base);changed=true;return;}
+      const g=goalData[key][i];
+      ['time','desc','plannedDate','sequence'].forEach(f=>{if(g[f]==null&&base[f]!=null){g[f]=base[f];changed=true;}});
+      if(!g.catId){g.catId=base.catId;changed=true;}
+    });
+  });
+  return changed;
+}
+function getStudyCompletionStats(){
+  const generated=buildElectricianGoals();
+  let total=0,done=0,days=0,doneDays=0;
+  Object.keys(generated).sort().forEach(key=>{
+    const arr=goalData[key]||generated[key]||[];
+    if(!arr.length)return;
+    days++;
+    total+=arr.length;
+    const dayDone=arr.filter(g=>g.done).length;
+    done+=dayDone;
+    if(dayDone===arr.length)doneDays++;
+  });
+  return {total,done,days,doneDays,pct:total?Math.round(done/total*100):0};
+}
+function getAdaptiveStudyQueue(target=TODAY){
+  const start=studyDate(ELECTRICIAN_PLAN_START);
+  const planEnd=studyDate('2026-08-21');
+  const end=target<start?start:(target>planEnd?planEnd:target);
+  for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
+    const key=dateKey(d);
+    const arr=goalData[key]||buildElectricianGoals()[key]||[];
+    const items=arr.map((g,i)=>({goal:g,index:i,base:getStudyGoalBase(key,i)})).filter(x=>!x.goal.done);
+    if(items.length){
+      return {key,date:new Date(d),items,delay:Math.max(0,studyDaysBetween(key,dateKey(target))),isToday:key===dateKey(target)};
+    }
+  }
+  return null;
+}
+function formatStudyDayLabel(d){
+  return (d.getMonth()+1)+'/'+d.getDate()+' '+DAYS_KO[d.getDay()];
+}
+
 function ensureElectricianPlanState(){
   if(studyPlanVersion>=STUDY_PLAN_VERSION)return false;
   cats.length=0;
@@ -1657,25 +1717,51 @@ function ensureElectricianPlanState(){
 function renderElectricianBoard(){
   const exam=studyDate(ELECTRICIAN_EXAM_DATE);
   const left=Math.max(0,Math.ceil((exam-TODAY)/86400000));
-  const total=Math.max(1,studyDaysBetween(ELECTRICIAN_PLAN_START,ELECTRICIAN_EXAM_DATE));
-  const passed=Math.max(0,Math.min(total,total-left));
-  const phase=getStudyPhase(TODAY), subject=getStudySubject(TODAY);
+  const stats=getStudyCompletionStats();
+  const queue=getAdaptiveStudyQueue(TODAY);
+  const effectiveDate=queue?queue.date:TODAY;
+  const phase=getStudyPhase(effectiveDate), subject=getStudySubject(effectiveDate);
+  const delay=queue?queue.delay:0;
   const set=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt;};
   set('study-exam-dday','D-'+left);
-  set('study-exam-sub','2026.08.22 시험 · 평일 19:30 시작 · '+passed+'/'+total+'일 진행');
-  const pg=document.getElementById('study-plan-progress');if(pg)pg.style.width=Math.round(passed/total*100)+'%';
+  set('study-exam-sub','실제 진도 '+stats.done+'/'+stats.total+'개 완료 · '+(delay>0?'계획보다 '+delay+'일 밀림':'계획 정상'));
+  const pg=document.getElementById('study-plan-progress');if(pg)pg.style.width=stats.pct+'%';
   set('study-current-phase',phase.name.replace(/^\d단계\s*/,''));
-  set('study-phase-caption',(subject?subject.short+' · ':'')+phase.desc);
-  const dt=document.getElementById('study-today-date');if(dt)dt.textContent=(TODAY.getMonth()+1)+'월 '+TODAY.getDate()+'일 '+DAYS_KO[TODAY.getDay()]+'요일 · '+(subject?subject.short:phase.name);
+  set('study-phase-caption',(subject?subject.short+' · ':'')+(delay>0?'밀린 계획부터 처리 중':phase.desc));
+  const dt=document.getElementById('study-today-date');
+  if(dt){
+    const todayLabel=(TODAY.getMonth()+1)+'월 '+TODAY.getDate()+'일 '+DAYS_KO[TODAY.getDay()]+'요일';
+    dt.textContent=queue
+      ? todayLabel+' · '+(delay>0?formatStudyDayLabel(queue.date)+' 계획 이어가기':'오늘 계획')
+      : todayLabel+' · 계획 완료';
+  }
   const tasks=document.getElementById('study-today-task-list');
-  if(tasks)tasks.innerHTML=getStudyPlanText(TODAY).map(t=>'<div class="today-task"><div class="today-task-time">'+t.time+'</div><div><div class="today-task-title">'+t.title+'</div><div class="today-task-desc">'+t.desc+'</div></div></div>').join('');
+  if(tasks){
+    if(!queue){
+      tasks.innerHTML='<div class="today-task done-empty"><div><div class="today-task-title">오늘까지 밀린 계획 없음</div><div class="today-task-desc">체크 탭 기준으로 현재까지 잡힌 전기기사 계획을 모두 완료했어요.</div><div class="today-task-meta"><span class="today-task-chip ok">계획 정상</span></div></div></div>';
+    }else{
+      const dayLabel=formatStudyDayLabel(queue.date);
+      tasks.innerHTML=queue.items.map(({goal,index,base})=>{
+        const time=goal.time||base.time||'체크';
+        const title=escapeHtml(goal.text||base.title||'공부');
+        const desc=escapeHtml(goal.desc||base.desc||'체크 탭에서 완료하면 다음 계획으로 넘어갑니다.');
+        const carry=!queue.isToday;
+        return '<div class="today-task '+(carry?'carryover':'')+'">'
+          +'<div class="today-task-time">'+(carry?dayLabel:time)+'<small>'+(carry?time:'오늘')+'</small></div>'
+          +'<div><div class="today-task-title">'+title+'</div><div class="today-task-desc">'+desc+'</div>'
+          +'<div class="today-task-meta"><span class="today-task-chip '+(carry?'warn':'ok')+'">'+(carry?'밀린 계획':'오늘 계획')+'</span><span class="today-task-chip">'+(index+1)+'번째 항목</span></div>'
+          +(carry?'<div class="study-delay-note">'+queue.delay+'일 밀림 · 완료 체크하면 다음 날짜 계획으로 넘어갑니다.</div>':'')
+          +'</div></div>';
+      }).join('');
+    }
+  }
   const rail=document.getElementById('study-phase-rail');
   if(rail)rail.innerHTML=ELECTRICIAN_PHASES.map(p=>'<div class="phase-chip '+(p.id===phase.id?'active':'')+'"><span>'+studyFmtDate(p.start)+'-'+studyFmtDate(p.end)+'</span><strong>'+p.name+'</strong></div>').join('');
   const roadmap=document.getElementById('study-subject-roadmap');
   if(roadmap)roadmap.innerHTML=ELECTRICIAN_SUBJECTS.map(s=>{
     const active=subject&&subject.name===s.name;
     const days=Math.max(1,studyDaysBetween(s.start,s.end)+1);
-    const elapsed=TODAY<studyDate(s.start)?0:TODAY>studyDate(s.end)?days:Math.max(1,studyDaysBetween(s.start,dateKey(TODAY))+1);
+    const elapsed=effectiveDate<studyDate(s.start)?0:effectiveDate>studyDate(s.end)?days:Math.max(1,studyDaysBetween(s.start,dateKey(effectiveDate))+1);
     const pct=Math.min(100,Math.round(elapsed/days*100));
     return '<div class="subject-card '+(active?'active':'')+'"><div class="subject-top"><div class="subject-name">'+s.name+'</div><div class="subject-days">'+studyFmtDate(s.start)+'-'+studyFmtDate(s.end)+'</div></div><div class="subject-meta"><span class="subject-pill">'+s.theory+'</span><span class="subject-pill">'+s.problem+'</span><span class="subject-pill">'+s.hours+'</span></div><div class="subject-bar"><i style="width:'+pct+'%;background:'+s.color+'"></i></div></div>';
   }).join('');
@@ -2041,11 +2127,11 @@ function addGoal(){
   const inp=document.getElementById('goal-add-inp');
   const blkSel=document.getElementById('goal-blk-sel');
   const srcKey=blkSel?blkSel.value||null:null;
-  let catId='elec';
+  let catId='theory';
   if(srcKey){
     const parts=srcKey.split('_');
     const dk=parts[1];const idx=parseInt(parts[2]);
-    catId=sched[dk]?.[idx]?.catId||'elec';
+    catId=sched[dk]?.[idx]?.catId||'theory';
   }
   const text=inp.value.trim();if(!text||!selectedGoalDate)return;
   if(!goalData[selectedGoalDate])goalData[selectedGoalDate]=[];
@@ -3184,6 +3270,7 @@ async function init(){
   const mealPlanChanged=normalizeMealPlan();
   const debtAutoChanged=applyDebtAutoPayments();
   const studyPlanChanged=ensureElectricianPlanState();
+  const studyCarryoverChanged=syncElectricianGoalMetadata();
   syncActiveMonthSnapshot();
   showSaveStatus(loaded?'saved':'idle');
   if(loaded)setTimeout(()=>showSaveStatus('idle'),1500);
@@ -3205,7 +3292,7 @@ async function init(){
   },200);
 
   _ready=true; // 이제부터 자동저장 활성화
-  if(!loaded||debtAutoChanged||mealPlanChanged||studyPlanChanged)sbSave(); // 첫 실행, 자동 차감, 식단 업그레이드 반영 시 저장
+  if(!loaded||debtAutoChanged||mealPlanChanged||studyPlanChanged||studyCarryoverChanged)sbSave(); // 첫 실행, 자동 차감, 식단 업그레이드 반영 시 저장
 }
 
 init();
