@@ -1373,23 +1373,23 @@ const DAYS_KO = ['일','월','화','수','목','금','토'];
 const MONTHS_KO = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
 const TODAY = new Date(); TODAY.setHours(0,0,0,0);
 
-const STUDY_PLAN_VERSION = 20260706;
+const STUDY_PLAN_VERSION = 20260708;
 const ELECTRICIAN_EXAM_DATE = '2026-08-22';
-const ELECTRICIAN_PLAN_START = '2026-07-06';
+const ELECTRICIAN_PLAN_START = '2026-07-08';
 let studyPlanVersion = 0;
 
 const ELECTRICIAN_PHASES = [
-  {id:'theory',name:'1단계 이론 완주',start:'2026-07-06',end:'2026-07-31',color:'#2563EB',desc:'평일 2.5h, 주말 집중으로 강의 1회독'},
-  {id:'practice',name:'2단계 문제풀이',start:'2026-08-01',end:'2026-08-15',color:'#059669',desc:'문제풀이 강의와 기출 회독'},
+  {id:'theory',name:'1단계 이론 완주',start:'2026-07-08',end:'2026-08-02',color:'#2563EB',desc:'평일 2.5h, 주말 집중으로 강의 1회독'},
+  {id:'practice',name:'2단계 문제풀이',start:'2026-08-03',end:'2026-08-15',color:'#059669',desc:'문제풀이 강의와 기출 회독'},
   {id:'final',name:'3단계 최종 점검',start:'2026-08-16',end:'2026-08-21',color:'#D97706',desc:'CBT 모의고사, 오답, 공식 암기'}
 ];
 
 const ELECTRICIAN_SUBJECTS = [
-  {name:'회로이론 + 제어공학',short:'회로/제어',start:'2026-07-06',end:'2026-07-12',ideal:'5일',theory:'이론 24강',problem:'문풀 21강',hours:'약 19h 55m',color:'#2563EB'},
-  {name:'전기자기학',short:'전기자기학',start:'2026-07-13',end:'2026-07-16',ideal:'3일',theory:'이론 17강',problem:'문풀 9강',hours:'약 14h 17m',color:'#7C3AED'},
-  {name:'전기기기',short:'전기기기',start:'2026-07-17',end:'2026-07-23',ideal:'5일',theory:'이론 19강',problem:'문풀 9강',hours:'약 17h 17m',color:'#DB2777'},
-  {name:'전력공학',short:'전력공학',start:'2026-07-24',end:'2026-07-29',ideal:'5일',theory:'이론 20강',problem:'문풀 14강',hours:'약 17h 12m',color:'#059669'},
-  {name:'전기설비기술기준',short:'설비기준',start:'2026-07-30',end:'2026-07-31',ideal:'2일',theory:'이론 9강',problem:'문풀 6강',hours:'약 8h 47m',color:'#DC2626'}
+  {name:'회로이론 + 제어공학',short:'회로/제어',start:'2026-07-08',end:'2026-07-14',ideal:'5일',theory:'이론 24강',problem:'문풀 21강',hours:'약 19h 55m',color:'#2563EB'},
+  {name:'전기자기학',short:'전기자기학',start:'2026-07-15',end:'2026-07-18',ideal:'3일',theory:'이론 17강',problem:'문풀 9강',hours:'약 14h 17m',color:'#7C3AED'},
+  {name:'전기기기',short:'전기기기',start:'2026-07-19',end:'2026-07-24',ideal:'5일',theory:'이론 19강',problem:'문풀 9강',hours:'약 17h 17m',color:'#DB2777'},
+  {name:'전력공학',short:'전력공학',start:'2026-07-25',end:'2026-07-30',ideal:'5일',theory:'이론 20강',problem:'문풀 14강',hours:'약 17h 12m',color:'#059669'},
+  {name:'전기설비기술기준',short:'설비기준',start:'2026-07-31',end:'2026-08-02',ideal:'2일',theory:'이론 9강',problem:'문풀 6강',hours:'약 8h 47m',color:'#DC2626'}
 ];
 
 let cats = [
