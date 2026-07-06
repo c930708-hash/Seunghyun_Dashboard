@@ -1373,7 +1373,7 @@ const DAYS_KO = ['일','월','화','수','목','금','토'];
 const MONTHS_KO = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
 const TODAY = new Date(); TODAY.setHours(0,0,0,0);
 
-const STUDY_PLAN_VERSION = 20260708;
+const STUDY_PLAN_VERSION = 20260709;
 const ELECTRICIAN_EXAM_DATE = '2026-08-22';
 const ELECTRICIAN_PLAN_START = '2026-07-08';
 let studyPlanVersion = 0;
@@ -1574,7 +1574,7 @@ function switchSub(sub,btn){
     if(el)el.classList.toggle('active',s===sub);
   });
   if(sub==='calendar')renderCalendar();
-  if(sub==='goals'){if(!selectedGoalDate)selectedGoalDate=dateKey(TODAY);renderGoalsDateList();renderGoalsPanel();}
+  if(sub==='goals'){ensureStudySelectedDate();renderGoalsDateList();renderGoalsPanel();}
 }
 function switchDay(d,btn){
   document.getElementById('day-weekday').style.display=d==='weekday'?'block':'none';
@@ -1680,6 +1680,32 @@ function getAdaptiveStudyQueue(target=TODAY){
 }
 function formatStudyDayLabel(d){
   return (d.getMonth()+1)+'/'+d.getDate()+' '+DAYS_KO[d.getDay()];
+}
+
+function getStudyVisibleStartDate(){
+  const planStart=studyDate(ELECTRICIAN_PLAN_START);
+  return TODAY<planStart?new Date(planStart):new Date(TODAY);
+}
+function ensureStudySelectedDate(){
+  const min=getStudyVisibleStartDate();
+  if(!selectedGoalDate||studyDate(selectedGoalDate)<min)selectedGoalDate=dateKey(min);
+}
+function cleanupPreStartStudyGoals(){
+  const start=studyDate(ELECTRICIAN_PLAN_START);
+  let changed=false;
+  Object.keys(goalData).forEach(key=>{
+    const d=studyDate(key);
+    if(d>=studyDate('2026-07-06')&&d<start){
+      const arr=goalData[key]||[];
+      const isAuto=arr.length===0||arr.every(g=>['theory','practice','review'].includes(g.catId)||g.plannedDate);
+      if(isAuto){delete goalData[key];changed=true;}
+    }
+  });
+  if(selectedGoalDate&&studyDate(selectedGoalDate)<getStudyVisibleStartDate()){
+    selectedGoalDate=dateKey(getStudyVisibleStartDate());
+    changed=true;
+  }
+  return changed;
 }
 
 function ensureElectricianPlanState(){
@@ -2049,20 +2075,23 @@ function openCalModal(yr,mon,date,dow){
 // GOALS
 // ═══════════════════════════════════════
 function renderGoalsDateList(){
+  ensureStudySelectedDate();
   const list=document.getElementById('goals-date-list');list.innerHTML='';
+  const start=getStudyVisibleStartDate();
   for(let i=0;i<14;i++){
-    const d=new Date(TODAY);d.setDate(TODAY.getDate()+i);
+    const d=new Date(start);d.setDate(start.getDate()+i);
     const key=dateKey(d);
     const goals=goalData[key]||[];
     const done=goals.filter(g=>g.done).length;
     const isWE=d.getDay()===0||d.getDay()===6;
-    const isToday=i===0;
+    const isToday=dateKey(d)===dateKey(TODAY);
+    const isPlanStart=dateKey(d)===ELECTRICIAN_PLAN_START;
     const btn=document.createElement('button');
     btn.className='gd-btn'+(key===selectedGoalDate?' active':'')+(isWE?' weekend':'')+(isToday?' is-today':'');
     btn.innerHTML=`
       <span class="gd-dow">${DAYS_KO[d.getDay()]}</span>
       <span class="gd-main">${d.getMonth()+1}/${d.getDate()}</span>
-      ${isToday?'<span class="gd-today-tag">오늘</span>':''}
+      ${isToday?'<span class="gd-today-tag">오늘</span>':isPlanStart?'<span class="gd-today-tag">시작</span>':''}
       <span class="gd-badge ${goals.length>0&&done===goals.length?'done':''}">${goals.length>0?done+'/'+goals.length:'—'}</span>
     `;
     btn.onclick=()=>{selectedGoalDate=key;renderGoalsDateList();renderGoalsPanel();};
@@ -3271,6 +3300,7 @@ async function init(){
   const debtAutoChanged=applyDebtAutoPayments();
   const studyPlanChanged=ensureElectricianPlanState();
   const studyCarryoverChanged=syncElectricianGoalMetadata();
+  const studyStartCleanupChanged=cleanupPreStartStudyGoals();
   syncActiveMonthSnapshot();
   showSaveStatus(loaded?'saved':'idle');
   if(loaded)setTimeout(()=>showSaveStatus('idle'),1500);
@@ -3292,7 +3322,7 @@ async function init(){
   },200);
 
   _ready=true; // 이제부터 자동저장 활성화
-  if(!loaded||debtAutoChanged||mealPlanChanged||studyPlanChanged||studyCarryoverChanged)sbSave(); // 첫 실행, 자동 차감, 식단 업그레이드 반영 시 저장
+  if(!loaded||debtAutoChanged||mealPlanChanged||studyPlanChanged||studyCarryoverChanged||studyStartCleanupChanged)sbSave(); // 첫 실행, 자동 차감, 식단 업그레이드 반영 시 저장
 }
 
 init();
